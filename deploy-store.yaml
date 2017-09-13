@@ -1,0 +1,6 @@
+- hosts: store
+  roles:
+    - ipv4_gw
+    - java8
+    - cassandra
+    - elasticsearch

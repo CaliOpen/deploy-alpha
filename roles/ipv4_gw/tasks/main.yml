@@ -1,0 +1,12 @@
+- name: Configure default ipv4 gateway
+  shell: ip route add default via 192.168.1.254
+  ignore_errors: yes
+
+- name: Force apt to use only ipv4
+  shell: echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
+
+- name: add missing apt key
+  apt_key:
+    id: D9A579D6BB859933
+    keyserver: pgpkeys.mit.edu
+    state: present

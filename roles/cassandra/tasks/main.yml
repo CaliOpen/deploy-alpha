@@ -1,0 +1,42 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - fail2ban
+
+- name: add cassandra debian source
+  shell: echo "deb http://www.apache.org/dist/cassandra/debian 21x main" | tee /etc/apt/sources.list.d/cassandra.sources.list
+
+- name: add cassandra repository keys
+  shell: curl https://www.apache.org/dist/cassandra/KEYS | apt-key add -
+
+- name: add cassandra apt key
+  apt_key:
+    id: A278B781FE4B2BDA
+    keyserver: pool.sks-keyservers.net
+    state: present
+
+- name: update packages
+  apt:
+      update_cache: yes
+      upgrade: dist
+
+- name: create cassandra configuration directory
+  file:
+    name: /etc/cassandra
+    state: directory
+
+- name: configure cassandra
+  template: src=cassandra.yaml.j2 dest=/etc/cassandra/cassandra.yaml
+
+- name: configure cassandra
+  template: src=cassandra-env.sh dest=/etc/cassandra/cassandra-env.sh
+
+- name: install cassandra
+  apt:
+    name: cassandra
+    state: present
+
+- name: restart cassandra
+  shell: systemctl restart cassandra
