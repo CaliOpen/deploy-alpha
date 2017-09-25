@@ -1,0 +1,10 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - fail2ban
+       - redis-server
+- name: configure redis server
+  template: src=redis.conf.j2 dest=/etc/redis/redis.conf
+  notify: restart redis

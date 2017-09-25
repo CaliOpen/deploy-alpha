@@ -11,5 +11,8 @@ apiv1-1 ansible_host=ip_apiv1-1 ansible_user=root backend_ip=192.169.x.x
 [store]
 store1 ansible_host=ip_store1 ansible_user=root
 
+[cache]
+cache1 ansible_host=ip_cache1 ansible_user=root backend_ip=192.168.x.x
+
 [gateway]
 gw1 ansible_host=ip_gw1 ansible_user=root

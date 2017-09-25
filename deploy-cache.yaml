@@ -1,0 +1,4 @@
+- hosts: cache
+  roles:
+    - ipv4_gw
+    - cache
