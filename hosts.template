@@ -1,3 +1,13 @@
+[caliopen:children]
+apiv1
+
+[caliopen:vars]
+caliopen_version=0.3.0
+dist_directory=./dist
+
+[apiv1]
+apiv1-1 ansible_host=ip_apiv1-1 ansible_user=root backend_ip=192.169.x.x
+
 [store]
 store1 ansible_host=ip_store1 ansible_user=root
 

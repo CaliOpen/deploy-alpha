@@ -1,5 +1,5 @@
 - name: add jessie-backports to get openjdk-8
-  shell: echo "deb [arch=amd64] https://mirrors.gandi.net/debian/ jessie main contrib\ndeb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/debian-jessie.list
+  shell: echo -e "deb [arch=amd64] https://mirrors.gandi.net/debian/ jessie main contrib\ndeb http://http.debian.net/debian jessie-backports main" | tee /etc/apt/sources.list.d/debian-jessie.list
 
 - name: update packages
   apt:
