@@ -1,0 +1,4 @@
+- hosts: apiv1
+  roles:
+    - python-process
+    - apiv1

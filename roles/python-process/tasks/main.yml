@@ -1,0 +1,10 @@
+- name: create caliopen configuration directory
+  file:
+    path: /etc/caliopen
+    state: directory
+
+- name: install caliopen configuration file
+  template:
+    src: caliopen.yaml.template
+    dest: /etc/caliopen/caliopen.yaml
+ 

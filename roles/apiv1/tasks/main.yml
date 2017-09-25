@@ -1,0 +1,43 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - fail2ban
+       - nginx
+       - uwsgi
+       - python-pip
+       - gcc
+       - python-dev
+       - libffi-dev
+
+- name: configure nginx
+  template:
+    src: apiv1.nginx.j2
+    dest: /etc/nginx/sites-enabled/apiv1    
+
+- name: configure uwsgi
+  template:
+    src: apiv1.uwsgi.j2
+    dest: /etc/uwsgi/apps-enabled/apiv1.ini
+
+- name: copy caliopen packages
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"
+    dest: /var/tmp
+  with_items:
+    - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
+
+- name: install caliopen packages
+  shell: cd /var/tmp && pip install {{ item }}
+  with_items:
+    - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
+
+- name: install caliopen API configuration file
+  template:
+    src: apiv1.ini.j2
+    dest: /etc/caliopen/apiv1.ini

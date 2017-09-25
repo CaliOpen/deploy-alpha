@@ -1,0 +1,13 @@
+server {
+        listen 80;
+        server_name apiv1.alpha.caliopen.org;
+
+        location / {
+            include uwsgi_params;
+            uwsgi_pass uwsgi_sequoia_ng;
+        }
+}
+
+upstream uwsgi_sequoia_ng {
+  server 127.0.0.1:3001;
+}

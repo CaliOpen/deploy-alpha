@@ -1,0 +1,61 @@
+delivery_agent:
+    direct: True
+
+elasticsearch:
+    url: http://es.dev.caliopen.org:9200
+
+cassandra:
+    keyspace: caliopen
+    hosts:
+{% for host in groups['store'] %}
+        - {{ hostvars[host]['backend_ip'] }}
+{% endfor %}
+    consistency_level: 1
+    protocol_version: 3
+
+lmtp:
+    port: 4025
+    bind_address: 0.0.0.0
+
+broker:
+    port: 2525
+    host: localhost
+
+message_queue:
+    port: 4222
+    host: localhost
+
+object_store:
+    db_size_limit: 1048576
+    service: s3
+    endpoint: minio.dev.caliopen.org:9090
+    access_key: CALIOPEN_ACCESS_KEY_
+    secret_key: CALIOPEN_SECRET_KEY_BE_GOOD_AND_LIVE_OLD
+    location: eu-fr-localhost
+    buckets:
+        raw_messages: caliopen-raw-messages
+        temporary_attachments: caliopen-tmp-attachments
+
+system:
+    default_tags:
+        -
+            name: INBOX
+            background: '#000000'
+            color: black
+        -
+            name: SPAM
+            background: '#AAAAAA'
+            color: white
+        -
+            name: IMPORTANT
+            background: '#FF0000'
+            color: white
+
+default_domain: caliopen.local
+
+internal_domains:
+    - caliopen.local
+
+blacklistes:
+    mx:
+        - mx.bad.guy
