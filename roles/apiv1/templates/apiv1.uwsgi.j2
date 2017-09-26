@@ -1,7 +1,7 @@
 [uwsgi]
 plugin = python
 socket = 127.0.0.1:3001
-chdir = /usr/lib/python2.7/dist-packages/caliopen_api
+chdir = /usr/local/lib/python2.7/dist-packages/caliopen_api
 paste = config:/etc/caliopen/apiv1.ini
 paste-logger = true
 workers = 8
