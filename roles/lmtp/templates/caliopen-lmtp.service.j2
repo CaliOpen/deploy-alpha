@@ -1,0 +1,10 @@
+[Unit]
+Description=Caliopen lmtp service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/caliopen_lmtpd serve -c /etc/caliopen/caliopen-lmtp
+ExecStop=pkill caliopen_lmtpd
+
+[Install]
+WantedBy=local.target

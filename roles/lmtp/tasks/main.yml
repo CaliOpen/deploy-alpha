@@ -1,0 +1,24 @@
+- name: create caliopen configuration directory
+  file:
+    path: /etc/caliopen
+    state: directory
+
+- name: lmtp configuration file
+  template: src=caliopen-lmtp.yaml.j2 dest=/etc/caliopen/caliopen-lmtp.yaml
+
+- name: copy caliopen binary
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"
+    dest: /usr/local/bin
+    mode: 0711
+  with_items:
+    - caliopen_lmtpd
+
+- name: install caliopen lmtp as a systemd service
+  template: src=caliopen-lmtp.service.j2 dest=/etc/systemd/system/caliopen-lmtp.service
+
+- name: enable caliopen lmtp service
+  shell: systemctl enable caliopen-lmtp.service
+
+- name: start caliopen lmtp service
+  shell: systemctl start caliopen-lmtp.service
