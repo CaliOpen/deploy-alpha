@@ -16,3 +16,6 @@ cache1 ansible_host=ip_cache1 ansible_user=root backend_ip=192.168.x.x
 
 [gateway]
 gw1 ansible_host=ip_gw1 ansible_user=root
+
+[mq]
+mq1 ansible_host=ip_mq1 ansible_user=root backend_ip=192.168.x.x

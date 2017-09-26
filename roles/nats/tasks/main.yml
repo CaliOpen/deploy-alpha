@@ -1,0 +1,28 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - fail2ban
+       - unzip
+
+- name: download nats server
+  get_url:
+    url: https://github.com/nats-io/gnatsd/releases/download/v1.0.2/gnatsd-v1.0.2-linux-amd64.zip
+    dest: /var/tmp/gnatsd.zip
+
+- name: unzip nats server
+  unarchive:
+    src: /var/tmp/gnatsd.zip
+    dest: /var/tmp/
+    remote_src: yes
+
+- name: install nats
+  copy:
+    src: /var/tmp/gnatsd-v1.0.2-linux-amd64/gnatsd
+    dest: /usr/local/sbin/gnatsd
+    remote_src: yes
+    mode: 0711
+
+- name: start nats
+  shell: /usr/local/sbin/gnatsd -a {{ hostvars[inventory_hostname]['backend_ip'] }} -l /var/log/gnatsd.log -P /var/run/gnatsd &

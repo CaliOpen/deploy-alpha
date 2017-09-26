@@ -1,0 +1,4 @@
+- hosts: mq
+  roles:
+    - ipv4_gw
+    - nats
