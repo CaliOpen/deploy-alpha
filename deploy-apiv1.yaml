@@ -1,4 +1,5 @@
 - hosts: apiv1
   roles:
+    - ipv4_gw
     - python-process
     - apiv1
