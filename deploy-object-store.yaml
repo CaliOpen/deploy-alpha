@@ -1,0 +1,4 @@
+- hosts: object_store
+  roles:
+    - ipv4_gw
+    - object-store
