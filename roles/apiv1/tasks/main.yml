@@ -3,6 +3,7 @@
   with_items:
        - curl
        - facter
+       - iptables
        - fail2ban
        - nginx
        - nginx-extras

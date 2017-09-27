@@ -3,8 +3,10 @@
   with_items:
        - curl
        - facter
+       - iptables
        - fail2ban
        - redis-server
+
 - name: configure redis server
   template: src=redis.conf.j2 dest=/etc/redis/redis.conf
   notify: restart redis
