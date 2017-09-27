@@ -11,28 +11,38 @@ object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
 
 [store]
-store1 ansible_host=ip_store1 ansible_user=root
+store1 ansible_host=ip_store1 ansible_user=root backend_ip=backend_store1
+store2 ansible_host=ip_store2 ansible_user=root backend_ip=backend_store2
+store3 ansible_host=ip_store3 ansible_user=root backend_ip=backend_store3
+store4 ansible_host=ip_store4 ansible_user=root backend_ip=backend_store4
+store5 ansible_host=ip_store5 ansible_user=root backend_ip=backend_store5
 
 [cache]
-cache1 ansible_host=ip_cache1 ansible_user=root backend_ip=192.168.x.x
+cache1 ansible_host=ip_cache1 ansible_user=root backend_ip=backend_cache1
 
 [object_store]
-object_store1 ansible_host=ip_object_store1 ansible_user=root backend_ip=192.168.x.x
+object_store1 ansible_host=ip_object_store1 ansible_user=root backend_ip=backend_object_store1
 
 [gateway]
-gw1 ansible_host=ip_gw1 ansible_user=root
+gw1 ansible_host=ip_gw1 ansible_user=root backend_ip=backend_gw1
 
 [mq]
-mq1 ansible_host=ip_mq1 ansible_user=root backend_ip=192.168.x.x
+mq1 ansible_host=ip_mq1 ansible_user=root backend_ip=backend_mq1
 
 [apiv1]
-apiv1-1 ansible_host=ip_apiv1-1 ansible_user=root backend_ip=192.169.x.x
+apiv1-1 ansible_host=ip_apiv1_1 ansible_user=root backend_ip=backend_apiv1_1
 
 [apiv2]
-apiv2-1 ansible_host=ip_apiv2-1 ansible_user=root backend_ip=192.168.x.x
+apiv2-1 ansible_host=ip_apiv2_1 ansible_user=root backend_ip=backend_apiv2_2
 
 [lmtp]
-lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=192.168.x.x
+lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=backend_lmtp1
+
+[monitoring:children]
+prometheus
+
+[monitoring:vars]
+prometheus_version=1.7.2
 
 [prometheus]
-prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=192.168.x.x
+prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=backend_prometheus1
