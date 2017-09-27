@@ -1,13 +1,13 @@
 server {
         listen 80;
-        server_name apiv1.alpha.caliopen.org;
+        server_name {{ ansible_hostname }}.alpha.caliopen.org;
 
         location / {
             include uwsgi_params;
-            uwsgi_pass uwsgi_sequoia_ng;
+            uwsgi_pass uwsgi_apiv1;
         }
 }
 
-upstream uwsgi_sequoia_ng {
+upstream uwsgi_apiv1 {
   server 127.0.0.1:3001;
 }
