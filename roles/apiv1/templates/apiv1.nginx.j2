@@ -13,8 +13,8 @@ upstream uwsgi_apiv1 {
 }
 
 server {
-  listen {{ facter_ipaddress_eth1 }}:9145;
-  allow {{ facter_network_eth1 }}/24;
+  listen :9145;
+  allow 192.168.1.0/24;
   deny all;
   location /metrics {
     content_by_lua '
