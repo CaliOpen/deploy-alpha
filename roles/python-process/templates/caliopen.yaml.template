@@ -29,8 +29,8 @@ object_store:
     db_size_limit: 1048576
     service: s3
     endpoint: {{ hostvars['object_store1']['backend_ip'] }} :9000
-    access_key: CALIOPEN_ACCESS_KEY_
-    secret_key: CALIOPEN_SECRET_KEY_BE_GOOD_AND_LIVE_OLD
+    access_key: {{ object_store_access_key }}
+    secret_key: {{ object_store_secret_key }}
     location: eu-fr-localhost
     buckets:
         raw_messages: caliopen-raw-messages

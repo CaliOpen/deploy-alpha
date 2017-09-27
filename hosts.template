@@ -1,13 +1,14 @@
 [caliopen:children]
 apiv1
+apiv2
 lmtp
+object_store
 
 [caliopen:vars]
 caliopen_version=0.3.0
 dist_directory=./dist
-
-[apiv1]
-apiv1-1 ansible_host=ip_apiv1-1 ansible_user=root backend_ip=192.169.x.x
+object_store_access_key=SZ1BBGKTD2N13E0W5L8N
+object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
 
 [store]
 store1 ansible_host=ip_store1 ansible_user=root
@@ -23,6 +24,12 @@ gw1 ansible_host=ip_gw1 ansible_user=root
 
 [mq]
 mq1 ansible_host=ip_mq1 ansible_user=root backend_ip=192.168.x.x
+
+[apiv1]
+apiv1-1 ansible_host=ip_apiv1-1 ansible_user=root backend_ip=192.169.x.x
+
+[apiv2]
+apiv2-1 ansible_host=ip_apiv2-1 ansible_user=root backend_ip=192.168.x.x
 
 [lmtp]
 lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=192.168.x.x

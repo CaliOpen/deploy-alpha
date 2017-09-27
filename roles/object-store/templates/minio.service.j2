@@ -3,7 +3,7 @@ Description=Minio object store service
 
 [Service]
 Restart=always
-ExecStart=/usr/local/bin/minio server /srv/data
+ExecStart=/usr/local/bin/minio server --config-dir /etc/minio /srv/data
 ExecStop=pkill minio
 
 [Install]
