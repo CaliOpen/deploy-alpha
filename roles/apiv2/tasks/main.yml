@@ -6,6 +6,12 @@
 - name: api configuration file
   template: src=caliopen-api.yaml.j2 dest=/etc/caliopen/caliopen-api.yaml
 
+- name: install swagger.json
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/swagger.json"
+    dest: /etc/caliopen/swagger.json
+    mode: 0644
+
 - name: copy caliopen binary
   copy:
     src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"

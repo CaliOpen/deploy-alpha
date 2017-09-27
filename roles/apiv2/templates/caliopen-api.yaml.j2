@@ -30,7 +30,7 @@ ApiConfig:
   NatsConfig:
     url: nats://{{ hostvars['mq1']['backend_ip'] }}:4222
     outSMTP_topic: outboundSMTP # topic's name to post "send" draft order
-  swaggerSpec: ../doc/api/swagger.json #absolute path or relative path to go.server bin
+  swaggerSpec: /etc/caliopen/swagger.json #absolute path or relative path to go.server bin
   RedisConfig:
     host: {{ hostvars['cache1']['backend_ip'] }}:6379
     password: ""      #no password set
