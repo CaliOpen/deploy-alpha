@@ -30,6 +30,7 @@
     src: /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64.tar.gz
     dest: /var/tmp
     remote_src: yes
+
 - name: copy elasticsearch_exporter to correct location
   shell: cp -p /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64/elasticsearch_exporter /usr/local/bin
 
