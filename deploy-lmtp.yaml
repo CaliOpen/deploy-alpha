@@ -1,4 +1,5 @@
 - hosts: lmtp
   roles:
+    - common
     - ipv4_gw
     - lmtp

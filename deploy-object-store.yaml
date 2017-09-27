@@ -1,4 +1,5 @@
 - hosts: object_store
   roles:
+    - common
     - ipv4_gw
     - object-store
