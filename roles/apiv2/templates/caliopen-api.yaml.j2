@@ -1,0 +1,43 @@
+ApiConfig:
+  host: 127.0.0.1
+  port: 6544
+  BackendConfig:
+    backend_name: cassandra
+    backend_settings:
+      hosts:
+{% for host in groups['store'] %}
+      - {{ hostvars[host]['backend_ip'] }}
+{% endfor %}
+      keyspace: caliopen
+      consistency_level: 1
+      raw_size_limit: 1048576                                # max size in bytes for objects in db. Use S3 interface if larger.
+      object_store: s3
+      object_store_settings:
+        endpoint: {{ hostvars['object_store1']['backend_ip'] }}:9000
+        access_key: {{ object_store_access_key }}
+        secret_key: {{ object_store_secret_key }}
+        location: eu-fr-localhost                            # S3 region.
+        buckets:
+          raw_messages: caliopen-raw-messages                # bucket name to put raw messages to
+          temporary_attachments: caliopen-tmp-attachments    # bucket name to store draft attachments
+  IndexConfig:
+    index_name: elasticsearch
+    index_settings:
+      hosts:
+{% for host in groups['store'] %}
+      - http://{{ hostvars[host]['backend_ip'] }}:9200
+{% endfor %}
+  NatsConfig:
+    url: nats://{{ hostvars['mq1']['backend_ip'] }}:4222
+    outSMTP_topic: outboundSMTP # topic's name to post "send" draft order
+  swaggerSpec: ../doc/api/swagger.json #absolute path or relative path to go.server bin
+  RedisConfig:
+    host: {{ hostvars['cache1']['backend_ip'] }}:6379
+    password: ""      #no password set
+    db: 0             #use default db
+ProxyConfig:
+  host: 0.0.0.0
+  port: 31415
+  routes:
+  - /api/v2/: 127.0.0.1:6544
+  - /: {{ hostvars['apiv1-1']['backend_ip'] }}:6543         # route "/" catch all other requests

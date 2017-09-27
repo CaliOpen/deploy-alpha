@@ -1,0 +1,5 @@
+- hosts: apiv2
+  roles:
+    - common
+    - ipv4_gw
+    - apiv2

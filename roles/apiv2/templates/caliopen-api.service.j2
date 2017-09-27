@@ -1,0 +1,10 @@
+[Unit]
+Description=Caliopen apiv2 service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/caliopen_rest serve -c /etc/caliopen/caliopen-api
+ExecStop=pkill caliopen_api
+
+[Install]
+WantedBy=local.target
