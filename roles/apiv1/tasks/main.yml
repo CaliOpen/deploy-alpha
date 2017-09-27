@@ -5,7 +5,9 @@
        - facter
        - fail2ban
        - nginx
+       - nginx-extras
        - uwsgi
+       - git
        - python-pip
        - gcc
        - python-dev
@@ -41,3 +43,12 @@
   template:
     src: apiv1.ini.j2
     dest: /etc/caliopen/apiv1.ini
+
+- name: install prometheus nginx metric exporter
+  git:
+    repo: "https://github.com/knyar/nginx-lua-prometheus.git"
+    dest: /srv/nginx-lua-prometheus
+
+- name: configure lua
+  template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
+  notify: restart nginx

@@ -11,3 +11,17 @@ server {
 upstream uwsgi_apiv1 {
   server 127.0.0.1:3001;
 }
+
+server {
+  listen {{ facter_ipaddress_eth1 }}:9145;
+  allow {{ facter_network_eth1 }}/24;
+  deny all;
+  location /metrics {
+    content_by_lua '
+      metric_connections:set(ngx.var.connections_reading, {"reading"})
+      metric_connections:set(ngx.var.connections_waiting, {"waiting"})
+      metric_connections:set(ngx.var.connections_writing, {"writing"})
+      prometheus:collect()
+    ';
+  }
+}
