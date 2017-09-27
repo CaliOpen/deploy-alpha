@@ -17,6 +17,26 @@
     dest: /usr/local
     remote_src: yes
 
+- name: install service for prometheus
+  template: src=prometheus.service.j2 dest=/etc/systemd/system/prometheus.service
+
+- name: install elasticsearch_exporter
+  get_url:
+    url: https://github.com/justwatchcom/elasticsearch_exporter/releases/download/v1.0.1/elasticsearch_exporter-1.0.1.linux-amd64.tar.gz
+    dest: /var/tmp
+
+- name: uncompress elasticsearch_exporter
+  unarchive:
+    src: /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64.tar.gz
+    dest: /var/tmp
+    remote_src: yes
+- name: copy elasticsearch_exporter to correct location
+  shell: cp -p /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64/elasticsearch_exporter /usr/local/bin
+
+- name: install elasticsearch_exporter service
+  template: src=elasticsearch_exporter.service.j2 dest=/etc/systemd/system/elasticsearch_exporter.service
+  notify: start elasticsearch_exporter
+
 - name: create configuration directory
   file:
     path: /etc/prometheus
@@ -24,11 +44,8 @@
 
 - name: configure prometheus
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
+  notify: restart prometheus
 
 - name: configure nginx
   template: src=prometheus.nginx.j2 dest=/etc/nginx/sites-enabled/prometheus
   notify: restart nginx
-
-- name: install service for prometheus
-  template: src=prometheus.service.j2 dest=/etc/systemd/system/prometheus.service
-  notify: start prometheus

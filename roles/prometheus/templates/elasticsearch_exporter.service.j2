@@ -1,0 +1,10 @@
+[Unit]
+Description=elasticsearch exporter service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/elasticsearch_exporter -es.uri http://{{ hostvars['store1']['backend_ip']}}:9200 -es.all 
+ExecStop=pkill elasticsearch_exporter
+
+[Install]
+WantedBy=local.target
