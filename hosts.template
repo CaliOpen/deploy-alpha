@@ -33,3 +33,6 @@ apiv2-1 ansible_host=ip_apiv2-1 ansible_user=root backend_ip=192.168.x.x
 
 [lmtp]
 lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=192.168.x.x
+
+[prometheus]
+prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=192.168.x.x

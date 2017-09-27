@@ -1,0 +1,5 @@
+- hosts: prometheus
+  roles:
+    - common
+    - ipv4_gw
+    - prometheus

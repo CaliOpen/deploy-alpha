@@ -1,0 +1,34 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - fail2ban
+       - nginx
+
+- name: download prometheus
+  get_url:
+    url: https://github.com/prometheus/prometheus/releases/download/v{{ prometheus_version}}/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /var/tmp
+
+- name: decompress prometheus
+  unarchive:
+    src: /var/tmp/prometheus-{{ prometheus_version }}.linux-amd64.tar.gz
+    dest: /usr/local
+    remote_src: yes
+
+- name: create configuration directory
+  file:
+    path: /etc/prometheus
+    state: directory
+
+- name: configure prometheus
+  template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
+
+- name: configure nginx
+  template: src=prometheus.nginx.j2 dest=/etc/nginx/sites-enabled/prometheus
+  notify: restart nginx
+
+- name: install service for prometheus
+  template: src=prometheus.service.j2 dest=/etc/systemd/system/prometheus.service
+  notify: start prometheus

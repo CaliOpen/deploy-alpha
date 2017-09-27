@@ -1,0 +1,10 @@
+[Unit]
+Description=Prometheus service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/prometheus-{{ prometheus_version }}.linux-amd64/prometheus -config.file=/etc/prometheus/prometheus.yml
+ExecStop=pkill prometheus
+
+[Install]
+WantedBy=local.target
