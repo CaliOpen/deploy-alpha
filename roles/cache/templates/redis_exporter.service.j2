@@ -1,0 +1,10 @@
+[Unit]
+Description=redis prometheus exporter service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/redis_exporter -web.listen-address {{ facter_ipaddress_eth1 }}:9121
+ExecStop=pkill redis_exporter
+
+[Install]
+WantedBy=local.target

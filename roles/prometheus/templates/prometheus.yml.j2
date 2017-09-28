@@ -29,3 +29,6 @@ scrape_configs:
 
       # cassandra cluster
       - targets: [{% for host in groups['store'] %}'{{ hostvars[host]['backend_ip'] }}:7070',{% endfor %}]
+
+      # cache
+      - targets: [{% for host in groups['cache'] %}'{{ hostvars[host]['backend_ip'] }}:9121',{% endfor %}]
