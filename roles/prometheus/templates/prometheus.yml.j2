@@ -14,8 +14,18 @@ scrape_configs:
     static_configs:
       - targets: ['localhost:9090']
 
+  - job_name: 'http'
+    scrape_interval: 5s
+    static_configs:
       # nginx servers
       - targets: [{% for host in groups['apiv1'] %}'{{ hostvars[host]['backend_ip'] }}:9145',{% endfor %}]
 
+  - job_name: 'stores'
+    scrape_interval: 5s
+    static_configs:
+
       # elasticsearch exporter
       - targets: ['localhost:9108']
+
+      # cassandra cluster
+      - targets: [{% for host in groups['store'] %}'{{ hostvars[host]['backend_ip'] }}:7070',{% endfor %}]

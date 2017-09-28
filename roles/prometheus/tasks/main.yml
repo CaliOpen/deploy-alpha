@@ -32,6 +32,9 @@
     dest: /var/tmp
     remote_src: yes
 
+- name: ensure elasticsearch_exporter is not running
+  service: name=elasticsearch_exporter state=stopped
+
 - name: copy elasticsearch_exporter to correct location
   shell: cp -p /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64/elasticsearch_exporter /usr/local/bin
 
