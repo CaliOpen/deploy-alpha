@@ -14,6 +14,17 @@
        - python-dev
        - libffi-dev
 
+- name: nginx certificate directory
+  file:
+    path: /etc/nginx/certs
+    state: directory
+
+- name: install ssl certificate and private key
+  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
+  with_items:
+    - caliopen.crt
+    - caliopen.key
+
 - name: configure nginx
   template:
     src: apiv1.nginx.j2
