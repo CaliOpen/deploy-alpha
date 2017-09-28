@@ -1,0 +1,47 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - curl
+       - facter
+       - iptables
+       - fail2ban
+       - nginx
+       - nginx-extras
+
+- name: add grafana apt source
+  shell: echo "deb https://packagecloud.io/grafana/stable/debian/ jessie main"| tee /etc/apt/sources.list.d/packagecloud.list
+
+- name: update packages
+  apt:
+      update_cache: yes
+      upgrade: dist
+
+- name: install elasticsearch pgp key
+  apt_key:
+    id: D88E42B4
+    url:  https://packagecloud.io/gpg.key
+    state: present
+
+- name: install grafana server
+  apt:
+    name: grafana
+    state: present
+
+- name: start grafana service
+  service: name=grafana-server state=started
+
+- name: nginx certificate directory
+  file:
+    path: /etc/nginx/certs
+    state: directory
+
+- name: install ssl certificate and private key
+  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
+  with_items:
+    - caliopen.crt
+    - caliopen.key
+
+- name: configure nginx
+  template:
+    src: monitor.nginx.j2
+    dest: /etc/nginx/sites-enabled/monitor    

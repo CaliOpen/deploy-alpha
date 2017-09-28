@@ -40,9 +40,13 @@ lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=backend_lmtp1
 
 [monitoring:children]
 prometheus
+monitor
 
 [monitoring:vars]
 prometheus_version=1.7.2
 
 [prometheus]
 prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=backend_prometheus1
+
+[monitor]
+monitor1 ansible_host=ip_monitor1 ansible_user=root backend_ip=backend_monitor1
