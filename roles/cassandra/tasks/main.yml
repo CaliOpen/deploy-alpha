@@ -41,7 +41,7 @@
 
 - name: install jmx prometheus exporter
   get_url:
-    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.10/jmx_prometheus_javaagent-0.10.jar
+    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.9/jmx_prometheus_javaagent-0.9.jar
     dest: /etc/cassandra
 
 - name: configure jmx exporter
