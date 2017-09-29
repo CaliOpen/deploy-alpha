@@ -34,13 +34,14 @@
 
 - name: ensure elasticsearch_exporter is not running
   service: name=elasticsearch_exporter state=stopped
+  ignore_errors: yes
 
 - name: copy elasticsearch_exporter to correct location
   shell: cp -p /var/tmp/elasticsearch_exporter-1.0.1.linux-amd64/elasticsearch_exporter /usr/local/bin
 
 - name: install elasticsearch_exporter service
-  template: src=elasticsearch_exporter.service.j2 dest=/etc/systemd/system/elasticsearch_exporter.service
-  notify: start elasticsearch_exporter
+  template: src=elasticsearch-exporter.service.j2 dest=/etc/systemd/system/elasticsearch-exporter.service
+  notify: start elasticsearch-exporter
 
 - name: create configuration directory
   file:
