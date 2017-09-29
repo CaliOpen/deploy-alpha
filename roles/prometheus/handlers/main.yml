@@ -8,4 +8,4 @@
   service: name=prometheus state=restarted
 
 - name: start elasticsearch_exporter
-  service: name=elasticsearch_exporter state=started
+  service: name=elasticsearch-exporter state=started

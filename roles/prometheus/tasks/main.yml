@@ -33,7 +33,7 @@
     remote_src: yes
 
 - name: ensure elasticsearch_exporter is not running
-  service: name=elasticsearch_exporter state=stopped
+  service: name=elasticsearch-exporter state=stopped
   ignore_errors: yes
 
 - name: copy elasticsearch_exporter to correct location
