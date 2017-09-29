@@ -3,4 +3,5 @@
     - common
     - ipv4_gw
     - python-process
+    - nginx
     - apiv1

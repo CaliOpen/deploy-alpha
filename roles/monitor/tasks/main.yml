@@ -5,9 +5,6 @@
        - facter
        - iptables
        - fail2ban
-       - git
-       - nginx
-       - nginx-extras
 
 - name: add grafana apt source
   shell: echo "deb https://packagecloud.io/grafana/stable/debian/ jessie main"| tee /etc/apt/sources.list.d/packagecloud.list
@@ -34,27 +31,8 @@
 - name: start grafana service
   service: name=grafana-server state=started
 
-- name: nginx certificate directory
-  file:
-    path: /etc/nginx/certs
-    state: directory
-
-- name: install ssl certificate and private key
-  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
-  with_items:
-    - caliopen.crt
-    - caliopen.key
-
 - name: configure nginx
   template:
     src: monitor.nginx.j2
     dest: /etc/nginx/sites-enabled/monitor    
-
-- name: install prometheus nginx metric exporter
-  git:
-    repo: "https://github.com/knyar/nginx-lua-prometheus.git"
-    dest: /srv/nginx-lua-prometheus
-
-- name: configure lua
-  template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
-
+  notify: restart nginx

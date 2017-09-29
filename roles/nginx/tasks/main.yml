@@ -1,0 +1,31 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - git
+       - nginx
+       - nginx-extras
+
+- name: nginx certificate directory
+  file:
+    path: /etc/nginx/certs
+    state: directory
+
+- name: install ssl certificate and private key
+  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
+  with_items:
+    - caliopen.crt
+    - caliopen.key
+
+- name: install prometheus nginx metric exporter
+  git:
+    repo: "https://github.com/knyar/nginx-lua-prometheus.git"
+    dest: /srv/nginx-lua-prometheus
+
+- name: configure lua
+  template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
+  notify: restart nginx
+
+- name: remove default nginx site
+  file:
+    path: /etc/nginx/sites-enables/default
+    state: absent

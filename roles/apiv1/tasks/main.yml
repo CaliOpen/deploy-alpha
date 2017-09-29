@@ -5,30 +5,11 @@
        - facter
        - iptables
        - fail2ban
-       - nginx
-       - nginx-extras
        - uwsgi
-       - git
        - python-pip
        - gcc
        - python-dev
        - libffi-dev
-
-- name: nginx certificate directory
-  file:
-    path: /etc/nginx/certs
-    state: directory
-
-- name: install ssl certificate and private key
-  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
-  with_items:
-    - caliopen.crt
-    - caliopen.key
-
-- name: configure nginx
-  template:
-    src: apiv1.nginx.j2
-    dest: /etc/nginx/sites-enabled/apiv1    
 
 - name: configure uwsgi
   template:
@@ -62,11 +43,8 @@
     dest: /etc/caliopen/swagger.json
     mode: 0644
 
-- name: install prometheus nginx metric exporter
-  git:
-    repo: "https://github.com/knyar/nginx-lua-prometheus.git"
-    dest: /srv/nginx-lua-prometheus
-
-- name: configure lua
-  template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
-  notify: restart nginx
+- name: configure nginx
+  template:
+    src: apiv1.nginx.j2
+    dest: /etc/nginx/sites-enabled/apiv1 
+  notify: restart nginx   
