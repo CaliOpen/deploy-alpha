@@ -18,7 +18,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       # nginx servers
-      - targets: [{% for host in groups['apiv1'] %}'{{ hostvars[host]['backend_ip'] }}:9145',{% endfor %}]
+      - targets: [{% for host in groups['monitor'] %}'{{ hostvars[host]['backend_ip'] }}:9145',{% endfor %}]
 
   - job_name: 'stores'
     scrape_interval: 5s

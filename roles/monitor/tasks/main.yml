@@ -5,6 +5,7 @@
        - facter
        - iptables
        - fail2ban
+       - git
        - nginx
        - nginx-extras
 
@@ -48,3 +49,12 @@
   template:
     src: monitor.nginx.j2
     dest: /etc/nginx/sites-enabled/monitor    
+
+- name: install prometheus nginx metric exporter
+  git:
+    repo: "https://github.com/knyar/nginx-lua-prometheus.git"
+    dest: /srv/nginx-lua-prometheus
+
+- name: configure lua
+  template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
+
