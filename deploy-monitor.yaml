@@ -1,0 +1,5 @@
+- hosts: monitor
+  roles:
+    - common
+    - ipv4_gw
+    - monitor
