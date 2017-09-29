@@ -18,7 +18,7 @@
 
 - name: install packagecloud pgp key
   apt_key:
-    id: D88E42B4
+    id: C2E73424D59097AB
     url:  https://packagecloud.io/gpg.key
     state: present
 
@@ -26,6 +26,9 @@
   apt:
     name: grafana
     state: present
+
+- name: configure grafana server
+  template: src=grafana.ini.j2 dest=/etc/grafana/grafana.ini
 
 - name: start grafana service
   service: name=grafana-server state=started

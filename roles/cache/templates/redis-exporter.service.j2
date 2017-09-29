@@ -3,7 +3,7 @@ Description=redis prometheus exporter service
 
 [Service]
 Restart=always
-ExecStart=/usr/local/bin/redis_exporter -web.listen-address {{ facter_ipaddress_eth1 }}:9121
+ExecStart=/usr/local/bin/redis_exporter -web.listen-address {{ facter_ipaddress_eth1 }}:9121 -redis.addr {{ facter_ipaddress_eth1 }}:6379 
 ExecStop=pkill redis_exporter
 
 [Install]
