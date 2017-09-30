@@ -1,0 +1,10 @@
+[Unit]
+Description=gnats service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/sbin/gnatsd -a {{ hostvars[inventory_hostname]['backend_ip'] }} -l /var/log/gnatsd.log -P /var/run/gnatsd.pid -m 8222
+ExecStop=kill /var/run/gnatsd.pid
+
+[Install]
+WantedBy=local.target

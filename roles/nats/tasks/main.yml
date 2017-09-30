@@ -25,5 +25,14 @@
     remote_src: yes
     mode: 0711
 
+- name: install gnats service
+  template: src=gnatsd.service.j2 dest=/etc/systemd/system/gnatsd.service
+
 - name: start nats
-  shell: /usr/local/sbin/gnatsd -a {{ hostvars[inventory_hostname]['backend_ip'] }} -l /var/log/gnatsd.log -P /var/run/gnatsd &
+  service: name=gnatsd state=started
+
+- name: install prometheus-nats-exporter service
+  template: src=prometheus-nats-exporter.service.j2 dest=/etc/systemd/system/prometheus-nats-exporter.service
+
+- name: start prometheus-nats-exporter service
+  service: name=prometheus-nats-exporter state=started

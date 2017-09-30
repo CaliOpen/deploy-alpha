@@ -32,3 +32,10 @@ scrape_configs:
 
       # cache
       - targets: [{% for host in groups['cache'] %}'{{ hostvars[host]['backend_ip'] }}:9121',{% endfor %}]
+
+  - job_name: 'queues'
+    scrape_interval: 5s
+    static_configs:
+
+      # nats exporter
+      - targets: [{% for host in groups['mq'] %}'{{ hostvars[host]['backend_ip'] }}:7777',{% endfor %}]
