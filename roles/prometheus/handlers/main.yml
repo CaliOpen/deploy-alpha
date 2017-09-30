@@ -7,5 +7,5 @@
 - name: restart prometheus
   service: name=prometheus state=restarted
 
-- name: start elasticsearch_exporter
+- name: start elasticsearch-exporter
   service: name=elasticsearch-exporter state=started
