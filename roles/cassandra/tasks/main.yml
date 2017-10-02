@@ -1,11 +1,3 @@
-- name: Install dependencies
-  action: apt pkg={{item}} state=installed
-  with_items:
-       - curl
-       - facter
-       - iptables
-       - fail2ban
-
 - name: add cassandra debian source
   shell: echo "deb http://www.apache.org/dist/cassandra/debian 21x main" | tee /etc/apt/sources.list.d/cassandra.sources.list
 
