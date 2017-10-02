@@ -39,3 +39,10 @@ scrape_configs:
 
       # nats exporter
       - targets: [{% for host in groups['mq'] %}'{{ hostvars[host]['backend_ip'] }}:7777',{% endfor %}]
+
+  - job_name: 'hosts'
+    scrape_interval: 5s
+    static_configs:
+
+      # node exporter
+      - targets: [{% for host in groups['all'] %}'{{ hostvars[host]['backend_ip'] }}:9100',{% endfor %}]

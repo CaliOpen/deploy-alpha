@@ -1,0 +1,10 @@
+[Unit]
+Description=node exporter service
+
+[Service]
+Restart=always
+ExecStart=/usr/local/bin/node_exporter
+ExecStop=pkill node_exporter -web.listen-address {{ facter_network_eth1 }}:9100
+
+[Install]
+WantedBy=local.target
