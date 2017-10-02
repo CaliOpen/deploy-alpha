@@ -33,7 +33,7 @@ mq1 ansible_host=ip_mq1 ansible_user=root backend_ip=backend_mq1
 apiv1-1 ansible_host=ip_apiv1_1 ansible_user=root backend_ip=backend_apiv1_1
 
 [apiv2]
-apiv2-1 ansible_host=ip_apiv2_1 ansible_user=root backend_ip=backend_apiv2_2
+apiv2-1 ansible_host=ip_apiv2_1 ansible_user=root backend_ip=backend_apiv2_1
 
 [lmtp]
 lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=backend_lmtp1
