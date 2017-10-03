@@ -56,24 +56,24 @@ port = 6543
 keys = root, caliopen, waitress
 
 [handlers]
-keys = console
+keys = console, syslog
 
 [formatters]
-keys = generic
+keys = generic, syslog
 
 [logger_root]
-level = INFO
-handlers = console
+level = DEBUG
+handlers = console, syslog
 
 [logger_caliopen]
 level = DEBUG
-handlers = console
+handlers = console, syslog
 qualname = caliopen
 propagate = 0
 
 [logger_waitress]
 level = DEBUG
-handlers = console
+handlers = console, syslog
 qualname = waitress
 propagate = 0
 
@@ -82,6 +82,14 @@ class = StreamHandler
 args = (sys.stderr,)
 level = NOTSET
 formatter = generic
+
+[handler_syslog]
+class=handlers.SysLogHandler
+level=DEBUG
+formatter=syslog
+args=('/dev/log', handlers.SysLogHandler.LOG_USER)
+
+
 
 [formatter_generic]
 format = %(asctime)s %(levelname)-5.5s [%(name)s][%(threadName)s] %(message)s
