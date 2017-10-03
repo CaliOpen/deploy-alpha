@@ -31,7 +31,7 @@
 
 - name: install some missing python dependencies
   pip:
-    name: {{ item }}
+    name: "{{ item }}"
   with_items:
     - strict-rfc3339
     - webcolors
