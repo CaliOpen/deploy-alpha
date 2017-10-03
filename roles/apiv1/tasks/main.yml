@@ -2,6 +2,7 @@
   action: apt pkg={{item}} state=installed
   with_items:
        - uwsgi
+       - uwsgi-plugin-python
        - python-pip
        - gcc
        - python-dev
@@ -27,6 +28,13 @@
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
+
+- name: install some missing python dependencies
+  pip:
+    name: {{ item }}
+  with_items:
+    - strict-rfc3339
+    - webcolors
 
 - name: install caliopen API configuration file
   template:
