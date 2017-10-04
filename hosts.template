@@ -5,7 +5,7 @@ lmtp
 object_store
 
 [caliopen:vars]
-caliopen_version=0.3.0
+caliopen_version=0.4.0
 dist_directory=./dist
 object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
