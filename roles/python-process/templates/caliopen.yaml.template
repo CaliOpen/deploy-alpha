@@ -2,7 +2,7 @@ delivery_agent:
     direct: True
 
 elasticsearch:
-    url: http://es.dev.caliopen.org:9200
+    url: http://{{hostvars['store1']['backend_ip'] }}:9200
 
 cassandra:
     keyspace: caliopen
