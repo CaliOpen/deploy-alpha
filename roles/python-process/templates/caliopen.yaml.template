@@ -2,7 +2,10 @@ delivery_agent:
     direct: True
 
 elasticsearch:
-    url: http://{{hostvars['store1']['backend_ip'] }}:9200
+    url:
+{% for host in groups['store'] %}
+        - http://{{ hostvars[host]['backend_ip'] }}:9200
+{% endfor %}
 
 cassandra:
     keyspace: caliopen
@@ -23,7 +26,7 @@ broker:
 
 message_queue:
     port: 4222
-    host: localhost
+    host: {{ hostvars['mq1']['backend_ip']}}
 
 object_store:
     db_size_limit: 1048576
