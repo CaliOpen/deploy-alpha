@@ -1,4 +1,4 @@
-#/bin/bash
+#!/bin/bash
 
 template_file='hosts.template'
 
