@@ -24,7 +24,7 @@ gandi vm create --memory 1024 --hostname monitor1 --image "Debian 8" --size 50G 
 
 # Api machines
 gandi vm create --memory 1024 --hostname apiv1-1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.100 --ip-version 4
-gandi vm create --memory 1024 --hostname apiv2-1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.110 --ip-version 4
+gandi vm create --memory 1024 --hostname apiv2-1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.110 --ip-version 6
 
 # LMTP
 gandi vm create --memory 1024 --hostname lmtp1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.20 --ip-version 6
