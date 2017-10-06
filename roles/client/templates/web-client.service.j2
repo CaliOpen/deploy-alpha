@@ -1,0 +1,9 @@
+[Unit]
+Description=Caliopen web client
+
+[Service]
+Environment
+WorkingDirectory=/opt/caliopen/server
+ExecStart=/usr/bin/node index.js
+[Install]
+WantedBy=multi-user.target

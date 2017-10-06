@@ -1,0 +1,37 @@
+- name: add node debian pgp key
+  apt_key:
+    id: 1655A0AB68576280
+    url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+    state: present
+
+- name: add node debian repository
+  shell: echo "deb https://deb.nodesource.com/node_6.x jessie main" > /etc/apt/sources.list.d/nodesource.list
+
+- name: update packages
+  apt:
+    update_cache: yes
+    upgrade: dist
+
+- name: install nodejs
+  apt:
+    name: nodejs
+    state: present
+
+- name: configure nginx
+  template:
+    src: caliopen_client.nginx.j2
+    dest: /etc/nginx/sites-enabled/caliopen_client
+
+- name: copy caliopen packages
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/server"
+    dest: /opt/caliopen
+
+- name: configure web client
+  template: src=index.js.j2 dest=/opt/caliopen/server/index.js
+
+- name: install web client service
+  template: src=web-client.service.j2 dest=/etc/systemd/system/web-client.service
+
+- name: start web client service
+  service: name=web-client state=started
