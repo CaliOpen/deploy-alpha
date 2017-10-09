@@ -4,7 +4,7 @@ template_file='hosts.template'
 
 cp ${template_file} hosts.temp
 
-for machine in gw1 store1 store2 store3 store4 store5 cache1 mq1 object-store1 prometheus1 monitor1 apiv1-1 apiv2-1 lmtp1
+for machine in gw1 store1 store2 store3 store4 store5 cache1 mq1 object-store1 prometheus1 monitor1 apiv1-1 apiv2-1 web-client1 lmtp1
 do
 	other_name=`echo ${machine}|tr "-" "_"`
 	echo "# Setting ${machine} (${other_name}) into inventory"

@@ -1,0 +1,10 @@
+[Unit]
+Description=Caliopen web client
+
+[Service]
+Environment
+WorkingDirectory=/opt/caliopen/client
+ExecStart=start-client
+
+[Install]
+WantedBy=multi-user.target

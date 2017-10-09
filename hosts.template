@@ -1,6 +1,7 @@
 [caliopen:children]
 apiv1
 apiv2
+web_client
 lmtp
 object_store
 
@@ -9,6 +10,8 @@ caliopen_version=0.4.0
 dist_directory=./dist
 object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
+web_client_cookie_secret=_4+%J;_F&?#!+mR&IsYq:Xg4A*wvse
+web_client_seal_secret=D}(2$5q)#_#yKX90,+0d5?4**a6ws8e`
 
 [store]
 store1 ansible_host=ip_store1 ansible_user=root backend_ip=backend_store1
@@ -34,6 +37,9 @@ apiv1-1 ansible_host=ip_apiv1_1 ansible_user=root backend_ip=backend_apiv1_1
 
 [apiv2]
 apiv2-1 ansible_host=ip_apiv2_1 ansible_user=root backend_ip=backend_apiv2_1
+
+[web_client]
+web-client1 ansible_host=ip_web_client1 ansible_user=root backend_ip=backend_web_client1
 
 [lmtp]
 lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=backend_lmtp1
