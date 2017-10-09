@@ -1,0 +1,42 @@
+- name: Install dependencies
+  action: apt pkg={{item}} state=installed
+  with_items:
+       - python-pip
+       - gcc
+       - python-dev
+       - libffi-dev
+       - libssl-dev
+
+- name: copy caliopen packages
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"
+    dest: /var/tmp
+  with_items:
+    - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_nats-{{ caliopen_version }}-py2.py3-none-any.whl
+
+- name: install caliopen packages
+  shell: cd /var/tmp && pip install {{ item }}
+  with_items:
+    - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_nats-{{ caliopen_version }}-py2.py3-none-any.whl
+
+- name: install some missing python dependencies
+  pip:
+    name: "{{ item }}"
+  with_items:
+    - strict-rfc3339
+    - webcolors
+
+- name: install worker service
+  template: src=caliopen-worker.service.j2 dest=/etc/systemd/system/caliopen-worker.service
+
+- name: start worker service
+  service: name=caliopen-worker state=started
+ 

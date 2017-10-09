@@ -1,0 +1,9 @@
+[Unit]
+Description=Caliopen worker service
+
+[Service]
+Restart=always
+ExecStart=/usr/bin/python /usr/local/lib/python2.7/dist-packages/caliopen_nats/listener.py -f /etc/caliopen/caliopen.yaml
+
+[Install]
+WantedBy=local.target
