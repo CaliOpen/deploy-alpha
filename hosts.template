@@ -4,6 +4,7 @@ apiv2
 web_client
 lmtp
 object_store
+worker
 
 [caliopen:vars]
 caliopen_version=0.4.0
@@ -43,6 +44,9 @@ web-client1 ansible_host=ip_web_client1 ansible_user=root backend_ip=backend_web
 
 [lmtp]
 lmtp1 ansible_host=ip_lmtp1 ansible_user=root backend_ip=backend_lmtp1
+
+[worker]
+worker1 ansible_host=ip_worker1 ansible_user=root backend_ip=backend_worker1
 
 [monitoring:children]
 prometheus

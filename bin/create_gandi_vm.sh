@@ -31,3 +31,6 @@ gandi vm create --memory 1024 --hostname lmtp1 --image "Debian 8" --size 10G --d
 
 # web client machine
 gandi vm create --memory 1024 --hostname web-client1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.120 --ip-version 4
+
+# worker
+gandi vm create --memory 1024 --hostname worker1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.150 --ip-version 4
