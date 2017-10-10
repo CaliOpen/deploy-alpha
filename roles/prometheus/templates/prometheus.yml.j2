@@ -46,3 +46,6 @@ scrape_configs:
 
       # node exporter
       - targets: [{% for host in groups['all'] %}'{{ host }}.local:9100',{% endfor %}]
+
+rule_files:
+  - /etc/prometheus/rule*
