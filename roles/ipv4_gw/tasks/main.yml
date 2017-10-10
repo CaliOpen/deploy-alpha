@@ -34,3 +34,6 @@
 
 - name: start node exporter service
   service: name=node-exporter state=started
+
+- name: template /etc/hosts
+  template: src=hosts.j2 dest=/etc/hosts
