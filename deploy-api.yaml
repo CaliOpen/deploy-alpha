@@ -1,7 +1,9 @@
-- hosts: apiv1
+- hosts: api
   roles:
     - common
     - ipv4_gw
     - python-process
     - nginx
     - apiv1
+    - apiv2
+  
