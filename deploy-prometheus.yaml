@@ -2,4 +2,5 @@
   roles:
     - common
     - ipv4_gw
-    - prometheus
+    # - prometheus
+    - alertmanager

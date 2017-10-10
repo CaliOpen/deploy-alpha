@@ -1,6 +1,3 @@
-- name: restart nginx
-  service: name=nginx state=restarted
-
 - name: start prometheus
   service: name=prometheus state=started
 
