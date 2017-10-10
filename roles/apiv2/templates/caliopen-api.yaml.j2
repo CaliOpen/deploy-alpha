@@ -40,4 +40,4 @@ ProxyConfig:
   port: 31415
   routes:
   - /api/v2/: 127.0.0.1:6544
-  - /: {{ hostvars['apiv1-1']['backend_ip'] }}:6543         # route "/" catch all other requests
+  - /: {{ hostvars['api1']['backend_ip'] }}:6543         # route "/" catch all other requests
