@@ -40,16 +40,12 @@
     dest: /opt/caliopen
 
 - name: install node packages
-  shell: yarn
+  shell: NODE_ENV=production yarn
   args:
     chdir: /opt/caliopen/client
-
-- name: install client launcher
-  template: src=start-client.j2 dest=/opt/caliopen/client/start-client mode=0755
 
 - name: install web client service
   template: src=web-client.service.j2 dest=/etc/systemd/system/web-client.service
 
 - name: start web client service
   service: name=web-client state=started
-
