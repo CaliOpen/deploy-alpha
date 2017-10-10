@@ -18,7 +18,7 @@ scrape_configs:
     scrape_interval: 5s
     static_configs:
       # nginx servers
-      - targets: [{% for host in groups['monitor'] %}'{{ hostvars[host]['backend_ip'] }}:9145',{% endfor %}{% for host in groups['api'] %}'{{ hostvars[host]['backend_ip'] }}:9145',{% endfor %}]
+      - targets: [{% for host in groups['monitor'] %}'{{ host }}.local:9145',{% endfor %}{% for host in groups['api'] %}'{{ host }}.local:9145',{% endfor %}]
 
   - job_name: 'stores'
     scrape_interval: 5s
@@ -28,21 +28,21 @@ scrape_configs:
       - targets: ['localhost:9108']
 
       # cassandra cluster
-      - targets: [{% for host in groups['store'] %}'{{ hostvars[host]['backend_ip'] }}:7070',{% endfor %}]
+      - targets: [{% for host in groups['store'] %}'{{ host }}.local:7070',{% endfor %}]
 
       # cache
-      - targets: [{% for host in groups['cache'] %}'{{ hostvars[host]['backend_ip'] }}:9121',{% endfor %}]
+      - targets: [{% for host in groups['cache'] %}'{{ host }}.local:9121',{% endfor %}]
 
   - job_name: 'queues'
     scrape_interval: 5s
     static_configs:
 
       # nats exporter
-      - targets: [{% for host in groups['mq'] %}'{{ hostvars[host]['backend_ip'] }}:7777',{% endfor %}]
+      - targets: [{% for host in groups['mq'] %}'{{ host }}.local:7777',{% endfor %}]
 
   - job_name: 'hosts'
     scrape_interval: 5s
     static_configs:
 
       # node exporter
-      - targets: [{% for host in groups['all'] %}'{{ hostvars[host]['backend_ip'] }}:9100',{% endfor %}]
+      - targets: [{% for host in groups['all'] %}'{{ host }}.local:9100',{% endfor %}]
