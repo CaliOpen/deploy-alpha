@@ -51,6 +51,7 @@ monitor
 
 [monitoring:vars]
 prometheus_version=1.7.2
+alertmanager_version=0.9.1
 
 [prometheus]
 prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=backend_prometheus1

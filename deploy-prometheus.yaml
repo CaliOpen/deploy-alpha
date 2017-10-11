@@ -3,3 +3,4 @@
     - common
     - ipv4_gw
     - prometheus
+    - alertmanager

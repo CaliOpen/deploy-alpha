@@ -39,6 +39,9 @@
     path: /etc/prometheus
     state: directory
 
+- name: upload rule files
+  copy: src=rule1 dest=/etc/prometheus/rule1
+
 - name: configure prometheus
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
   notify: restart prometheus
