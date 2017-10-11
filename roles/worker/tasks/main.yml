@@ -38,5 +38,5 @@
   template: src=caliopen-worker.service.j2 dest=/etc/systemd/system/caliopen-worker.service
 
 - name: start worker service
-  service: name=caliopen-worker state=started
+  service: name=caliopen-worker state=started enabled=yes
  

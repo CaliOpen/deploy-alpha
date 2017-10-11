@@ -25,10 +25,10 @@
   template: src=gnatsd.service.j2 dest=/etc/systemd/system/gnatsd.service
 
 - name: start nats
-  service: name=gnatsd state=started
+  service: name=gnatsd state=started enabled=yes
 
 - name: install prometheus-nats-exporter service
   template: src=prometheus-nats-exporter.service.j2 dest=/etc/systemd/system/prometheus-nats-exporter.service
 
 - name: start prometheus-nats-exporter service
-  service: name=prometheus-nats-exporter state=started
+  service: name=prometheus-nats-exporter state=started enabled=yes

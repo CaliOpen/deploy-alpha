@@ -1,5 +1,5 @@
 - name: start alertmanager
-  service: name=alertmanager state=started
+  service: name=alertmanager state=started enabled=yes
 
 - name: restart alertmanager
   service: name=alertmanager state=restarted
