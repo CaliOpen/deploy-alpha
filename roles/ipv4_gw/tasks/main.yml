@@ -12,3 +12,10 @@
        - facter
        - iptables
        - fail2ban
+       - iptables-persistent
+
+- name: copy iptables rules for v6
+  template: src=ip6tables.j2 dest=/etc/iptables/rules.v6
+
+- name: copy iptables rules for v4
+  template: src=iptables.j2 dest=/etc/iptables/rules.v4
