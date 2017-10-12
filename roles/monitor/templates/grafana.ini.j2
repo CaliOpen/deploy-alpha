@@ -36,7 +36,7 @@
 ;http_port = 3000
 
 # The public facing domain name used to access grafana from a browser
-domain = grafana.caliopen.org
+domain = grafana.{{ caliopen_domain_name }}
 
 # Redirect to correct domain if host header does not match domain
 # Prevents DNS rebinding attacks
@@ -44,7 +44,7 @@ enforce_domain = true
 
 # The full public facing url you use in browser, used for redirects and emails
 # If you use reverse proxy and sub path specify full url (with sub path)
-root_url = https://grafana.caliopen.org
+root_url = https://grafana.{{ caliopen_domain_name }}
 
 # Log web requests
 ;router_logging = false
