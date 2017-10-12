@@ -17,14 +17,11 @@ Services
 - cache:
 	- 1 machine to run redis
 
-- apiv1:
-	- 1 machine to run python ReST API (api v1)
-
 - lmtp:
 	- 1 machine to run caliopen lmtp service
 
-- apiv2:
-	- 1 machine to run go ReST API (api v2)
+- api:
+	- 2 machine to run ReST API go version (apiv2) and python one (apiv1)
 
 - client:
 	- 1 machine to run the web client
@@ -54,14 +51,15 @@ Setup
 Deployment
 ----------
 
-Base platform
-~~~~~~~~~~~~~
+Infrastructure
+~~~~~~~~~~~~~~
 
 ansible-playbook -i hosts deploy-gateway.yaml
+ansible-playbook -i hosts deploy-prometheus.yaml
 ansible-playbook -i hosts deploy-monitor.yaml
 
-Storage layer must be setup first.
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Storage layer must be setup first
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 ansible-playbook -i hosts deploy-store.yaml
 ansible-playbook -i hosts deploy-object-store.yaml
