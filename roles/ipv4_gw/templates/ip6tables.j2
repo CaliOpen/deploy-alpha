@@ -19,6 +19,11 @@
 # Open ssh
 -A INPUT -p tcp --dport 22 -j ACCEPT
 
+# Outside services
+{% if 'open_tcp_ports' in hostvars[ansible_hostname] %}{% for port in hostvars[ansible_hostname]['open_tcp_ports'] %}
+-A INPUT -i eth0 -p tcp --dport {{ port }} -j ACCEPT
+{% endfor %}{% endif %}
+
 # Allow all icmp
 -A INPUT -p icmpv6 -j ACCEPT
 #

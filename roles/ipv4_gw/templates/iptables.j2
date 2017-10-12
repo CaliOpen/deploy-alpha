@@ -20,8 +20,15 @@
 #
 # End iptables header
 #
+
 # Local network
 -A INPUT -d {{ facter_network_eth1 }}/24 -i eth1 -j ACCEPT
+
+# Outside services
+{% if 'open_tcp_ports' in hostvars[ansible_hostname] %}{% for port in hostvars[ansible_hostname]['open_tcp_ports'] %}
+-A INPUT -i eth0 -p tcp --dport {{ port }} -j ACCEPT
+{% endfor %}{% endif %}
+
 #
 # Start iptables footer
 #
