@@ -13,8 +13,8 @@
 - name: install ssl certificate and private key
   copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
   with_items:
-    - caliopen.crt
-    - caliopen.key
+    - "{{ caliopen_domain_name }}.crt"
+    - "{{ caliopen_domain_name }}.key"
 
 - name: install prometheus nginx metric exporter
   git:

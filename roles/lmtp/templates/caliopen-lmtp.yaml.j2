@@ -3,8 +3,8 @@ AppConfig:
   allowed_hosts:
   - localhost
   - caliopen.local
-  - caliopen.org
-  primary_mail_host: caliopen.org
+  - {{ caliopen_domain_name }}
+  primary_mail_host: {{ caliopen_domain_name }}
   inbound_servers: # only one allowed for now
   - is_enabled: true
     host_name: localhost
@@ -15,7 +15,7 @@ AppConfig:
     tls_always_on: false
     max_clients: 1000
   #submit is the MTA to connect to for final delivery (postfix for example)
-  submit_address: smtp.dev.caliopen.org
+  submit_address: smtp1.local   # XXX hardcoded, can't use list
   submit_port: 10025
   submit_user:
   submit_password:
