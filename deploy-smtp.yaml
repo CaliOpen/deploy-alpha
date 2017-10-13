@@ -1,0 +1,5 @@
+- hosts: smtp
+  roles:
+    - common
+    - ipv4_gw
+    - smtp
