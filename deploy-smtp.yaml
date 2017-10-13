@@ -1,5 +1,5 @@
 - hosts: smtp
   roles:
     - common
-    - ipv4_gw
+    - iptables
     - smtp
