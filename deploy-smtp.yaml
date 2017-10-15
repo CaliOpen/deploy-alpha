@@ -1,6 +1,5 @@
-- hosts: mq
+- hosts: smtp
   roles:
     - common
-    - ipv4_gw
     - iptables
-    - nats
+    - smtp

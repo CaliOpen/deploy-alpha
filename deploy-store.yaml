@@ -2,6 +2,7 @@
   roles:
     - common
     - ipv4_gw
+    - iptables
     - java8
     - cassandra
     - elasticsearch
