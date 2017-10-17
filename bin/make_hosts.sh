@@ -5,7 +5,7 @@ template_file='hosts.template'
 
 cp ${template_file} hosts
 
-for machine in `cat ${template_file}|grep 'ansible_host='|cut -d ' ' -f1`
+for machine in `cat ${template_file}|grep 'ansible_host='|cut -d ' ' -f1|tr '_' '-'`
 do
 	other_name=`echo ${machine}|tr "-" "_"`
 	echo "# Setting ${machine} (${other_name}) into inventory"
