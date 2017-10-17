@@ -1,6 +1,5 @@
 - hosts: mq
   roles:
     - common
-    - ipv4_gw
     - iptables
     - nats

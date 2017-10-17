@@ -1,6 +1,5 @@
 - hosts: cache
   roles:
     - common
-    - ipv4_gw
     - iptables
     - cache

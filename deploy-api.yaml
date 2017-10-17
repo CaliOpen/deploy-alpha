@@ -1,7 +1,6 @@
 - hosts: api
   roles:
     - common
-    - ipv4_gw
     - iptables
     - python-process
     - nginx

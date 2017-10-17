@@ -1,0 +1,6 @@
+search {{ caliopen_domain_name }}
+{% for server in caliopen_nameservers %}
+nameserver {{ server }}
+{% endfor %}
+
+options timeout:1 attempts:3 rotate

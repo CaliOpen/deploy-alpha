@@ -1,8 +1,29 @@
 - name: install ssh authorized keys
   template: src=ssh_authorized_keys dest=/root/.ssh/authorized_keys mode=0600
 
+- name: Configure default ipv4 gateway
+  shell: ip route add default via 192.168.1.254
+  ignore_errors: yes
+  when: ansible_eth0.ipv4 is undefined
+
+- name: Force apt to use only ipv4
+  shell: echo 'Acquire::ForceIPv4 "true";' | tee /etc/apt/apt.conf.d/99force-ipv4
+  when: ansible_eth0.ipv4 is undefined
+
+- name: configure resolv.conf
+  template: src=resolv.conf.j2 dest=/etc/resolv.conf
+
+- name: add gandi apt key
+  apt_key:
+    url: https://mirrors.gandi.net/gandi/pubkey
+    id: D9A579D6BB859933
+    state: present
+
+- name: upgrade packages
+  shell: apt-get upgrade -y
+
 - name: Install dependencies
-  action: apt pkg={{item}} state=installed
+  action: apt pkg={{item}} state=installed update_cache=yes
   with_items:
        - curl
        - facter

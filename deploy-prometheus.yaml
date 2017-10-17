@@ -1,7 +1,6 @@
 - hosts: prometheus
   roles:
     - common
-    - ipv4_gw
     - iptables
     - prometheus
     - alertmanager

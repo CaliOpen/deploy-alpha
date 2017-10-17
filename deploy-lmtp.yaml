@@ -1,6 +1,5 @@
 - hosts: lmtp
   roles:
     - common
-    - ipv4_gw
     - iptables
     - lmtp

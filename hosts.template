@@ -8,14 +8,25 @@ storage
 object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
 caliopen_domain_name=alpha.caliopen.org
+caliopen_nameservers=["155.133.128.67", "155.133.128.65"]
+
+# Version of installed software out of host packaging
+
+# monitoring platform
+prometheus_version=1.7.2
+alertmanager_version=0.9.1
+
+# gnats
+gnats_version=1.0.2
+
+# prometheus exporters
+redis_exporter_version=0.12.2
+jmx_prometheus_javaagent_version=0.9
+node_exporter_version=0.14.0
 
 [monitoring:children]
 prometheus
 monitor
-
-[monitoring:vars]
-prometheus_version=1.7.2
-alertmanager_version=0.9.1
 
 [caliopen:children]
 api

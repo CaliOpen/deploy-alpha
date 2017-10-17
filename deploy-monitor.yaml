@@ -1,7 +1,6 @@
 - hosts: monitor
   roles:
     - common
-    - ipv4_gw
     - iptables
     - nginx
     - monitor
