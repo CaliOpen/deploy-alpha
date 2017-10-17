@@ -1,13 +1,8 @@
-- name: download alertmanager
-  get_url:
-    url: https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz
-    dest: /var/tmp
-
-- name: decompress alertmanager
-  unarchive:
-    src: /var/tmp/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz
-    dest: /usr/local
-    remote_src: yes
+- name: install alertmanager
+  copy:
+    src: "{{ dist_directory }}/ext/alertmanager-{{ alertmanager_version }}-linux-amd64/alertmanager"
+    dest: /usr/local/sbin/alertmanager
+    mode: 0711
 
 - name: install service for alertmanager
   template: src=alertmanager.service.j2 dest=/etc/systemd/system/alertmanager.service
