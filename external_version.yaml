@@ -1,0 +1,16 @@
+
+dist_directory: "./dist"
+
+# Version of installed software out of host packaging
+
+# monitoring platform
+prometheus_version: "1.7.2"
+alertmanager_version: "0.9.1"
+
+# gnats
+gnats_version: "1.0.2"
+
+# prometheus exporters
+redis_exporter_version: "0.12.2"
+jmx_prometheus_javaagent_version: "0.9"
+node_exporter_version: "0.14.0"
