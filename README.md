@@ -54,6 +54,17 @@ Setup
 (*) can use a wildcard certificate and put same files in all roles
 (**) this repository contain the encrypted private key for alpha.caliopen.org domain. Encryption is done using ansible vault.
 
+External dependencies
+---------------------
+
+External dependencies must be downloaded and build in local {{ dist_directory }}/ext directory
+
+A local playbook must be used:
+
+```
+ansible-playbook -i hosts get_external_dependencies.yaml -e @external_version.ini
+```
+
 Deployment
 ----------
 
