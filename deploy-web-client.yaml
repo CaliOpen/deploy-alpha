@@ -1,7 +1,6 @@
 - hosts: web_client
   roles:
     - common
-    - ipv4_gw
     - iptables
     - nginx
     - client

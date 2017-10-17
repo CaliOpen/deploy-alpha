@@ -1,7 +1,6 @@
 - hosts: worker
   roles:
     - common
-    - ipv4_gw
     - iptables
     - python-process
     - worker
