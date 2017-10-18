@@ -1,6 +1,6 @@
 - name: install nats
   copy:
-    src: "{{ dist_directory }}/ext/gnatsd-v{{ gnatsd_version }}-linux-amd64/gnatsd"
+    src: "{{ dist_directory }}/ext/gnatsd-v{{ gnats_version }}-linux-amd64/gnatsd"
     dest: /usr/local/sbin/gnatsd
     mode: 0711
 
