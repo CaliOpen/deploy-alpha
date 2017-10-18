@@ -54,7 +54,7 @@ system:
             background: '#FF0000'
             color: white
 
-default_domain: caliopen.local
+default_domain: {{ caliopen_domain_name }}
 
 internal_domains:
     - caliopen.local
