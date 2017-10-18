@@ -4,7 +4,7 @@ Description=Caliopen web client
 [Service]
 Environment
 WorkingDirectory=/opt/caliopen/client
-ExecStart=yarn start:prod
+ExecStart=/opt/caliopen/client/bin/server &
 
 [Install]
 WantedBy=multi-user.target

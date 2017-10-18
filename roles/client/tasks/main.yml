@@ -44,6 +44,9 @@
   args:
     chdir: /opt/caliopen/client
 
+- name: install launcher
+  template: src=server.j2 dest=/opt/caliopen/client/bin/server mode=0755
+
 - name: install web client service
   template: src=web-client.service.j2 dest=/etc/systemd/system/web-client.service
 
