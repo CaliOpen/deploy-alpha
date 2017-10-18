@@ -312,4 +312,4 @@ JVM_OPTS="$JVM_OPTS $JVM_EXTRA_OPTS"
 
 # Add JMX prometheus exporter
 JMX_EXPORTER_DIR="/etc/cassandra/"
-JVM_OPTS="$JVM_OPTS -javaagent:$JMX_EXPORTER_DIR/jmx_prometheus_javaagent-0.9.jar=7070:$JMX_EXPORTER_DIR/cassandra_exporter.yaml"
+# JVM_OPTS="$JVM_OPTS -javaagent:$JMX_EXPORTER_DIR/jmx_prometheus_javaagent-{{ jmx_prometheus_javaagent_version }}.jar=7070:$JMX_EXPORTER_DIR/cassandra_exporter.yaml"
