@@ -3,8 +3,8 @@ Description=node exporter service
 
 [Service]
 Restart=always
-ExecStart=/usr/local/bin/node_exporter
-ExecStop=pkill node_exporter -web.listen-address {{ facter_network_eth1 }}:9100
+ExecStart=/usr/local/sbin/node_exporter -web.listen-address {{ facter_network_eth1 }}:9100
+ExecStop=pkill node_exporter 
 
 [Install]
 WantedBy=local.target

@@ -1,0 +1,71 @@
+# 
+# Ansible local playbook to get all external dependencies needed for caliopen platform
+#
+# You must have a defined $GOPATH and go >= 1.8 compiler
+
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    # nats server
+    - name: download nats server
+      get_url:
+        url: "https://github.com/nats-io/gnatsd/releases/download/v{{ gnats_version }}/gnatsd-v{{ gnats_version }}-linux-amd64.zip"
+        dest: "{{ dist_directory }}/ext/gnatsd-v{{ gnats_version }}-linux-amd64.zip"
+
+    - name: unzip nats server
+      unarchive:
+        src: "{{ dist_directory }}/ext/gnatsd-v{{ gnats_version }}-linux-amd64.zip"
+        dest: "{{ dist_directory }}/ext/"
+
+    # prometheus nats exporter
+    - name: download prometheus-nats-exporter
+      git:
+        repo: git@github.com:nats-io/prometheus-nats-exporter.git
+        dest: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter"
+
+    - name: build prometheus-nats-exporter
+      shell: go build
+      args:
+        chdir: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter"
+
+    - name: copy prometheus-nats-exporter
+      copy:
+        src: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter/prometheus-nats-exporter"
+        dest: "{{ dist_directory }}/ext/prometheus-nats-exporter"
+
+    # get alert manager release
+    - name: download alertmanager
+      get_url:
+        url: https://github.com/prometheus/alertmanager/releases/download/v{{ alertmanager_version }}/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz
+        dest: "{{ dist_directory }}/ext/alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+
+    - name: decompress alertmanager
+      shell: "tar xzvf alertmanager-{{ alertmanager_version }}.linux-amd64.tar.gz"
+      args:
+        chdir: "{{ dist_directory }}/ext"
+
+    # redis prometheus exporter
+    - name: download redis prometheus exporter
+      get_url:
+        url: "https://github.com/oliver006/redis_exporter/releases/download/v{{ redis_exporter_version }}/redis_exporter-v{{ redis_exporter_version }}.linux-amd64.tar.gz"
+        dest: "{{ dist_directory }}/ext/redis_exporter.tar.gz"
+
+    - name: decompress redis_exporter
+      shell: "tar xzvf redis_exporter.tar.gz"
+      args:
+        chdir: "{{ dist_directory }}/ext"
+
+    - name: get jmx prometheus exporter
+      get_url:
+        url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/{{ jmx_prometheus_javaagent_version }}/jmx_prometheus_javaagent-{{ jmx_prometheus_javaagent_version }}.jar
+        dest: "{{ dist_directory }}/ext"
+
+    - name: download node exporter
+      get_url:
+        url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
+        dest: "{{ dist_directory }}/ext"
+
+    - name: decompress node_exporter
+      shell: "tar xzvf node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+      args:
+        chdir: "{{ dist_directory }}/ext"

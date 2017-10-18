@@ -33,7 +33,7 @@ gandi vm create --memory 1024 --hostname lmtp1 --image "Debian 8" --size 10G --d
 gandi vm create --memory 1024 --hostname web-client1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.120 --ip-version 4
 
 # worker
-gandi vm create --memory 1024 --hostname worker1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.150 --ip-version 4
+gandi vm create --memory 1024 --hostname worker1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.150 --ip-version 6
 
 # SMTP
 # vlan ip range for smtp services : 192.168.1.32/29

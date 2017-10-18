@@ -7,17 +7,10 @@
   template: src=redis.conf.j2 dest=/etc/redis/redis.conf
   notify: restart redis
 
-- name: download redis prometheus exporter
-  get_url:
-    url: https://github.com/oliver006/redis_exporter/releases/download/v0.12.2/redis_exporter-v0.12.2.linux-amd64.tar.gz
-    dest: /var/tmp/redis_exporter.tar.gz
-
-- name: decompress redis_exporter
-  unarchive:
-    src: /var/tmp/redis_exporter.tar.gz
-    dest: /usr/local/bin/
-    remote_src: yes
-    owner: redis
+- name: install redis_exporter
+  copy:
+    src: "{{ dist_directory }}/ext/redis_exporter"
+    dest: /usr/local/sbin/redis_exporter
     mode: 0711
 
 - name: install redis_exporter service

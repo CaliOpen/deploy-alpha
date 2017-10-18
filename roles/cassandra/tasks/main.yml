@@ -23,7 +23,7 @@
 - name: configure cassandra
   template: src=cassandra.yaml.j2 dest=/etc/cassandra/cassandra.yaml
 
-- name: configure cassandra
+- name: configure cassandra environment
   template: src=cassandra-env.sh dest=/etc/cassandra/cassandra-env.sh
 
 - name: install cassandra
@@ -31,10 +31,11 @@
     name: cassandra
     state: present
 
-- name: install jmx prometheus exporter
-  get_url:
-    url: https://repo1.maven.org/maven2/io/prometheus/jmx/jmx_prometheus_javaagent/0.9/jmx_prometheus_javaagent-0.9.jar
+- name: install jmx exporter
+  copy:
+    src: "{{ dist_directory }}/ext/jmx_prometheus_javaagent-{{ jmx_prometheus_javaagent_version }}.jar"
     dest: /etc/cassandra
+    mode: 0622
 
 - name: configure jmx exporter
   template: src=cassandra_exporter.yaml.j2 dest=/etc/cassandra/cassandra_exporter.yaml
