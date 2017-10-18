@@ -62,7 +62,7 @@ External dependencies must be downloaded and build in local {{ dist_directory }}
 A local playbook must be used:
 
 ```
-ansible-playbook -i hosts get_external_dependencies.yaml -e @external_version.ini
+ansible-playbook -i hosts get_external_dependencies.yaml -e @external_version.yaml
 ```
 
 Deployment

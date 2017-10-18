@@ -20,17 +20,17 @@
     # prometheus nats exporter
     - name: download prometheus-nats-exporter
       git:
-        repo: git@github.com:nats-io/prometheus-nats-exporter.git
-        dest: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter"
+        repo: "https://github.com/nats-io/prometheus-nats-exporter.git"
+        dest: "{{ ansible_env['GOPATH']}}/src/github.com/nats-io/prometheus-nats-exporter"
 
     - name: build prometheus-nats-exporter
-      shell: go build
+      shell: GOOS=linux GOARCH=amd64 go build
       args:
-        chdir: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter"
+        chdir: "{{ ansible_env['GOPATH']}}/src/github.com/nats-io/prometheus-nats-exporter"
 
     - name: copy prometheus-nats-exporter
       copy:
-        src: "{{ ansible_env['GOPATH']}}/nats-io/prometheus-nats-exporter/prometheus-nats-exporter"
+        src: "{{ ansible_env['GOPATH']}}/src/github.com/nats-io/prometheus-nats-exporter/prometheus-nats-exporter"
         dest: "{{ dist_directory }}/ext/prometheus-nats-exporter"
 
     # get alert manager release
@@ -63,9 +63,9 @@
     - name: download node exporter
       get_url:
         url: https://github.com/prometheus/node_exporter/releases/download/v{{ node_exporter_version }}/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz
-        dest: "{{ dist_directory }}/ext"
+        dest: "{{ dist_directory }}/ext/node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
 
     - name: decompress node_exporter
-      shell: "tar xzvf node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
+      shell: "tar -xzvf node_exporter-{{ node_exporter_version }}.linux-amd64.tar.gz"
       args:
         chdir: "{{ dist_directory }}/ext"
