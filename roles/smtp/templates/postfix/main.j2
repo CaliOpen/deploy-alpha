@@ -4,12 +4,12 @@
 
 # INTERNET HOST AND DOMAIN NAMES
 ################################
-myhostname = mail.alpha.caliopen.org
+myhostname = {{ postfix_hostname | join(' ') }}
 mydomain = $myhostname
 myorigin = $myhostname
-mydestination = $myhostname
+mydestination = {{ postfix_mydestination | join(' ') }}
 smtpd_banner = $myhostname ESMTP $mail_name
-mynetworks = 192.168.1.33
+mynetworks = {{ postfix_mynetworks | join(' ') }}
 
 # TLS parameters
 ################
@@ -29,24 +29,24 @@ smtpd_tls_loglevel = 1
 ####################
 smtpd_delay_reject = yes
 smtpd_client_restrictions = permit_sasl_authenticated,
-permit_mynetworks,
-reject_rbl_client sbl-xbl.spamhaus.org,
-reject_rbl_client zen.spamhaus.org
+    permit_mynetworks,
+    reject_rbl_client sbl-xbl.spamhaus.org,
+    reject_rbl_client zen.spamhaus.org
 
 smtpd_helo_required = yes
 smtpd_helo_restrictions = permit_mynetworks,
-reject_non_fqdn_helo_hostname,
-reject_invalid_helo_hostname,
-reject_rhsbl_helo dbl.spamhaus.org
+    reject_non_fqdn_helo_hostname,
+    reject_invalid_helo_hostname,
+    reject_rhsbl_helo dbl.spamhaus.org
 
 smtpd_relay_restrictions = permit_mynetworks
 smtpd_recipient_restrictions = permit_mynetworks,
-reject_unauth_pipelining,
-reject_non_fqdn_recipient,
-reject_unknown_sender_domain,
-reject_unknown_recipient_domain,
-reject_unauth_destination,
-reject_unlisted_recipient
+    reject_unauth_pipelining,
+    reject_non_fqdn_recipient,
+    reject_unknown_sender_domain,
+    reject_unknown_recipient_domain,
+    reject_unauth_destination,
+    reject_unlisted_recipient
 
 smtpd_sender_restriction = permit_mynetworks
 
@@ -58,17 +58,27 @@ unknown_local_recipient_reject_code = 550
 #########################
 mynetworks_style = host
 
+#MILTERS
+#########
+# Milters for mail that arrives via the smtpd(8) server.
+smtpd_milters = unix:/var/run/opendkim/opendkim.sock
+non_smtpd_milters = unix:/var/run/opendkim/opendkim.sock
+
+# What to do in case of errors? Specify accept, reject, tempfail,
+# or quarantine (Postfix 2.6 or later).
+milter_default_action = tempfail
+
 #FINAL DELIVERY PROCESS
 #######################
-### all emails go to our lmtp
+### all emails go to our local smtp
 #
-virtual_mailbox_domains = alpha.caliopen.org
+virtual_mailbox_domains = {{ postfix_domain }}
 virtual_mailbox_maps =
-virtual_transport = lmtp:lmtp.alpha.caliopen.org:2525
+virtual_transport = {{ postfix_virtual_transport }}
 # the lookup below will be ignored but file must be present
 alias_database = hash:/etc/postfix/aliases
-message_size_limit = 20480000
+message_size_limit = {{ postfix_message_size_limit }}
 
 # Disable the SMTP VRFY command. This stops some techniques used to harvest email addresses.
-disable_vrfy_command = no
+disable_vrfy_command = {{ postfix_disable_vrfy_command }}
 
