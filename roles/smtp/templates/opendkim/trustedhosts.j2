@@ -1,0 +1,4 @@
+*@{{ postfix_domain }} mail._domainkey.{{ postfix_domain }}
+127.0.0.1
+::1
+{{ hostvars['lmtp1']['backend_ip'] }}

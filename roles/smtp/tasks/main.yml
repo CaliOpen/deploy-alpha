@@ -2,6 +2,6 @@
 
 - include_tasks: postfix.yml
 # - include: amavis.yml
-# - include: opendkim.yml
+- include_tasks: opendkim.yml
 # - include: spamassassin.yml
 # - include: razor.yml
