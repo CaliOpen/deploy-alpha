@@ -32,7 +32,11 @@
 - name: configure nginx
   template:
     src: caliopen_client.nginx.j2
-    dest: /etc/nginx/sites-enabled/caliopen_client
+    dest: /etc/nginx/sites-available/caliopen_client
+
+- name: activate client vhost
+  shell: ln -s /etc/nginx/sites-available/caliopen_client /etc/nginx/sites-enabled/caliopen_client
+  ignore_errors: true
 
 - name: copy caliopen packages
   copy:

@@ -1,0 +1,10 @@
+- name: install git
+  apt: name=git state=installed
+
+- name: clone repository with maintenance page
+  git:
+    repo: https://github.com/CaliOpen/alpha-landing-pages.git
+    dest: /opt/caliopen/alpha-pages
+
+- name: install nginx configuration in availables sites
+  template: src=maintenance.nginx.j2 dest=/etc/nginx/sites-available/maintenance
