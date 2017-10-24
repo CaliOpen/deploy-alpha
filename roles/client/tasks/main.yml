@@ -44,6 +44,9 @@
   args:
     chdir: /opt/caliopen/client
 
+- name: configure client
+  template: src=server.json.j2 dest=/opt/caliopen/client/config/server.json
+
 - name: install launcher
   template: src=server.j2 dest=/opt/caliopen/client/bin/server mode=0755
 
