@@ -1,0 +1,15 @@
+- hosts: web_client
+  handlers:
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+  tasks:
+    - name: deactivate web_client
+      shell: rm /etc/nginx/sites-enabled/caliopen_client
+      ignore_errors: yes
+
+    - name: activate maintenance
+      shell: ln -s /etc/nginx/sites-available/maintenance /etc/nginx/sites-enabled/maintenance
+      ignore_errors: yes
+      notify:
+        - restart nginx
