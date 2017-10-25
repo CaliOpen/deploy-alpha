@@ -27,6 +27,11 @@ postfix_virtual_transport: "smtp:{{ hostvars['lmtp1']['backend_ip'] }}:2525"
 postfix_aliases: []
 
 # defaults for milters
+milter_sql_db:
+milter_sql_host:
+milter_sql_port:
+milter_sql_user:
+milter_sql_user_password:
 milter_amavis_socket: "/var/run/amavis/amavisd.sock"
 milter_amavis_milter_socket: "/var/run/amavis/amavisd-milter.sock"
 milter_dkim_keys_dir: /etc/opendkim/keys

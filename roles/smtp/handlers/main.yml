@@ -2,14 +2,7 @@
 - name: restart postfix
   command: /bin/true
   notify:
-    - remove pid
     - restart service
-
-- name: remove pid
-  file:
-    path: "~postfix/pid/master.pid"
-    state: absent
-  when: is_docker_guest
 
 - name: new aliases
   command: newaliases
