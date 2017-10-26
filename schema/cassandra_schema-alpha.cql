@@ -282,7 +282,7 @@ CREATE TABLE caliopen.message (
     is_answered boolean,
     is_draft boolean,
     is_unread boolean,
-    parent_id text,
+    parent_id uuid,
     participants list<frozen<participant>>,
     pi frozen<pimodel>,
     privacy_features map<text, text>,
