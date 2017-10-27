@@ -3,6 +3,7 @@ monitoring
 caliopen
 gateway
 storage
+smtp
 
 [services:vars]
 dist_directory=./dist
