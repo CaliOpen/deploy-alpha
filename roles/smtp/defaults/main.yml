@@ -1,36 +1,42 @@
 ---
 # defaults for postfix
+postfix_domain: "{{ caliopen_domain_name }}"
 postfix_install:
   - postfix
   - mailutils
-postfix_hostname: "mail.{{ caliopen_domain_name }}"
-postfix_mailname: "mail.{{ caliopen_domain_name }}"
-postfix_aliases: []
-postfix_virtual_aliases: []
-postfix_sender_canonical_maps: []
-postfix_generic: []
-postfix_relayhost: false
-postfix_relayhost_port: 587
-postfix_relaytls: false
-postfix_inet_interfaces: "{{ ansible_host }}"
-postfix_inet_protocols: all
+postfix_hostname:
+  - "mail1.{{ caliopen_domain_name }}"
+postfix_mailname:
+  - "mail1.{{ caliopen_domain_name }}"
+postfix_inet_interface: "{{ ansible_host }}"
 postfix_mydestination:
-  - "{{ postfix_hostname }}"
+  - "{{ postfix_hostname | join(' ') }}"
   - localdomain
   - localhost
   - localhost.localdomain
 postfix_mynetworks:
-  - "{{ backend_ip }}"
+  - "192.168.1.32/29" # smtp subnet
+  - "192.168.1.16/29" # lmtp subnet
 postfix_smtpd_banner: '$myhostname ESMTP $mail_name'
-postfix_disable_vrfy_command: false
+postfix_disable_vrfy_command: "yes"
 postfix_message_size_limit: 20480000
 
+postfix_virtual_domains:
+  - "{{ caliopen_domaine_name}}"
+postfix_virtual_transport: "smtp:{{ hostvars['lmtp1']['backend_ip'] }}:2525"
+postfix_aliases: []
+
 # defaults for milters
+milter_sql_db:
+milter_sql_host:
+milter_sql_port:
+milter_sql_user:
+milter_sql_user_password:
 milter_amavis_socket: "/var/run/amavis/amavisd.sock"
 milter_amavis_milter_socket: "/var/run/amavis/amavisd-milter.sock"
 milter_dkim_keys_dir: /etc/opendkim/keys
-milter_dkim_key_file: key
-milter_dkim_group: vmail
+milter_dkim_selector: alpha-mail1
+milter_dkim_group: opendkim
 milter_spamass_db: spamassassin
 milter_spamass_user: spamass
 milter_spamass_user_override: vmail

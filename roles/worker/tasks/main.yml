@@ -1,5 +1,9 @@
 - name: Install dependencies
-  action: apt pkg={{item}} state=installed
+  apt:
+    name: "{{ item }}"
+    state: latest
+    update_cache: true
+    cache_valid_time: 3600
   with_items:
        - python-pip
        - gcc

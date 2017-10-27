@@ -10,4 +10,12 @@ Mode                s
 
 KeyTable            /etc/opendkim/keytable
 SigningTable        refile:/etc/opendkim/signingtable
+IternalHosts        /etc/opendkim/trustedhosts
+
+AlwaysAddARHeader   yes
+
+Diagnostics         yes
+
+Keyfile             /etc/opendkim/keys/{{ milter_dkim_selector }}.private
+Selector            {{ milter_dkim_selector }}
 

@@ -30,7 +30,7 @@ $policy_bank{'ORIGINATING'} = {
 ### For which domains is the mailserver responsible?
 ### => statical lookup for now, no SQL
 ###
-$mydomain = {{ postfix_tld }};
+$mydomain = {{ postfix_domain }};
 @local_domains_maps = ( [".$mydomain"] );
 
 ## @lookup_sql_dsn = ( ['DBI:mysql:database={{ milter_sql_db }};host={{ milter_sql_host}} ;port={{ milter_sql_port }}', '{{ milter_sql_user }}', '{{ milter_sql_user_password }}'], );
@@ -65,7 +65,7 @@ $final_spam_destiny = D_REJECT;     # Aktion, wenn kill_level erreicht wurde: E-
 ### If notification mails are to be sent to users (for example, if the mail is blocked)
 ###
 
-$notify_method  = 'smtp:[127.0.0.1]:25';
+$notify_method  = 'smtp:[{{ ansible_eth0.ipv4.address }}]:25';
 
 
 #------------ Do not modify anything below this line -------------

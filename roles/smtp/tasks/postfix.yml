@@ -34,8 +34,8 @@
 - name: install tsl certificate and private key
   copy: src={{ item }} dest=/etc/postfix/certs/{{ item }}
   with_items:
-    - "{{ caliopen_domain_name }}.crt"
-    - "{{ caliopen_domain_name }}.key"
+    - "{{ postfix_domain }}.crt"
+    - "{{ postfix_domain }}.key"
 
 # plays postfix configuration tasks
 - include_tasks: config_postfix.yml
