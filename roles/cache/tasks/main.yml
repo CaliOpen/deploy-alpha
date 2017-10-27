@@ -10,7 +10,7 @@
 - name: install redis_exporter
   copy:
     src: "{{ dist_directory }}/ext/redis_exporter"
-    dest: /usr/local/sbin/redis_exporter
+    dest: /usr/local/bin/redis_exporter
     mode: 0711
 
 - name: install redis_exporter service
