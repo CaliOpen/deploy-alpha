@@ -28,9 +28,9 @@
     group: opendkim
 
 - name: generate dkim-key
-  command: "opendkim-genkey --selector={{ milter_dkim_key_file }} --bits=2048 --directory={{ milter_dkim_keys_dir }} --domain={{ caliopen_domain_name }}"
+  command: "opendkim-genkey --selector={{ milter_dkim_selector }} --bits=2048 --directory={{ milter_dkim_keys_dir }} --domain={{ caliopen_domain_name }}"
   args:
-    creates: "/etc/opendkim/keys/{{ milter_dkim_key_file }}.private"
+    creates: "/etc/opendkim/keys/{{ milter_dkim_selector }}.private"
   notify: Restart OpenDKIM
 
 - name: add keytable file
@@ -60,7 +60,7 @@
 
 - name: private-key permissions
   file:
-    path: "/etc/opendkim/keys/{{ milter_dkim_key_file }}.private"
+    path: "/etc/opendkim/keys/{{ milter_dkim_selector }}.private"
     state: file
     owner: opendkim
     group: opendkim
@@ -71,3 +71,4 @@
     name: postfix
     groups: opendkim
     append: yes
+

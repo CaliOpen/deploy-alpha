@@ -35,7 +35,7 @@ milter_sql_user_password:
 milter_amavis_socket: "/var/run/amavis/amavisd.sock"
 milter_amavis_milter_socket: "/var/run/amavis/amavisd-milter.sock"
 milter_dkim_keys_dir: /etc/opendkim/keys
-milter_dkim_key_file: alpha-mail1
+milter_dkim_selector: alpha-mail1
 milter_dkim_group: opendkim
 milter_spamass_db: spamassassin
 milter_spamass_user: spamass
