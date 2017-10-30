@@ -385,8 +385,8 @@ CREATE TABLE caliopen.remote_identity (
     AND speculative_retry = '99.0PERCENTILE';
 
 CREATE TABLE caliopen.contact (
-    contact_id uuid,
     user_id uuid,
+    contact_id uuid,
     additional_name text,
     addresses list<frozen<postal_address>>,
     avatar text,
@@ -408,8 +408,8 @@ CREATE TABLE caliopen.contact (
     privacy_features map<text, text>,
     tags list<frozen<resource_tag>>,
     title text,
-    PRIMARY KEY (contact_id, user_id)
-) WITH CLUSTERING ORDER BY (user_id ASC)
+    PRIMARY KEY (user_id, contact_id)
+) WITH CLUSTERING ORDER BY (contact_id ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
     AND comment = ''
@@ -582,3 +582,4 @@ CREATE TABLE caliopen.user_tag (
     AND min_index_interval = 128
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
+
