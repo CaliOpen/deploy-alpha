@@ -1,12 +1,12 @@
 upstream uwsgi_apiv1 {
-  ip_hash;
+  least_conn;
   {% for host in groups['api'] %}
   server {{ hostvars[host]['backend_ip'] }}:3001;
   {% endfor %}
 }
 
 upstream apiv2 {
-  ip_hash;
+  least_conn;
   {% for host in groups['api'] %}
   server {{ hostvars[host]['backend_ip'] }}:31415;
   {% endfor %}
