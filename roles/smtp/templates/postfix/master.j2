@@ -7,10 +7,10 @@
 #               (yes)   (yes)   (yes)   (never) (100)
 # ==========================================================================
 
-# ingress (tls only for now)
+# ingress
 {{ ansible_eth0.ipv4.address }}:smtp inet  n       -       n       -       -       smtpd
     -o smtpd_sasl_auth_enable=no
-    -o smtpd_tls_security_level=encrypt
+    -o smtpd_tls_security_level=may
 
 # egress
 {{ ansible_eth1.ipv4.address }}:submission inet  n       -       n       -       -       smtpd
