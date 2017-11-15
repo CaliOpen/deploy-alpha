@@ -17,6 +17,8 @@ server {
     listen    [::]:443 ssl;
     server_name api.{{ caliopen_domain_name }};
 
+    client_max_body_size 5m;
+
     ssl_certificate     /etc/nginx/certs/{{ caliopen_domain_name }}.crt;
     ssl_certificate_key /etc/nginx/certs/{{ caliopen_domain_name }}.key;
     ssl_prefer_server_ciphers On;
