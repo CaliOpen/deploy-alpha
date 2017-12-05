@@ -42,14 +42,20 @@
   copy:
     src: "{{ dist_directory }}/{{ caliopen_version }}/client"
     dest: /opt/caliopen
+  tags:
+    - deploy
 
 - name: install node packages
   shell: NODE_ENV=production yarn
   args:
     chdir: /opt/caliopen/client
+  tags:
+    - deploy
 
 - name: configure client
   template: src=server.json.j2 dest=/opt/caliopen/client/config/server.json
+  tags:
+    - deploy
 
 - name: install launcher
   template: src=server.j2 dest=/opt/caliopen/client/bin/server mode=0755

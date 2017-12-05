@@ -5,12 +5,16 @@
 
 - name: api configuration file
   template: src=caliopen-api.yaml.j2 dest=/etc/caliopen/caliopen-api.yaml
+  tags:
+    - deploy
 
 - name: install swagger.json
   copy:
     src: "{{ dist_directory }}/{{ caliopen_version }}/swagger.json"
     dest: /etc/caliopen/swagger.json
     mode: 0644
+  tags:
+    - deploy
 
 - name: copy caliopen binary
   copy:
@@ -19,6 +23,8 @@
     mode: 0711
   with_items:
     - caliopen_rest
+  tags:
+    - deploy
 
 - name: install caliopen api as a systemd service
   template: src=caliopen-api.service.j2 dest=/etc/systemd/system/caliopen-api.service

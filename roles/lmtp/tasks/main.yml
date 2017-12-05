@@ -5,6 +5,8 @@
 
 - name: lmtp configuration file
   template: src=caliopen-lmtp.yaml.j2 dest=/etc/caliopen/caliopen-lmtp.yaml
+  tags:
+    - deploy
 
 - name: copy caliopen binary
   copy:
@@ -13,6 +15,8 @@
     mode: 0711
   with_items:
     - caliopen_lmtpd
+  tags:
+    - deploy
 
 - name: install caliopen lmtp as a systemd service
   template: src=caliopen-lmtp.service.j2 dest=/etc/systemd/system/caliopen-lmtp.service

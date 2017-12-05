@@ -7,4 +7,5 @@
   template:
     src: caliopen.yaml.template
     dest: /etc/caliopen/caliopen.yaml
- 
+  tags:
+    - deploy

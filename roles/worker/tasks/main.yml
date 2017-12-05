@@ -21,6 +21,8 @@
     - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_nats-{{ caliopen_version }}-py2.py3-none-any.whl
+  tags:
+    - deploy
 
 - name: install caliopen packages
   shell: cd /var/tmp && pip install {{ item }}
@@ -30,6 +32,8 @@
     - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_nats-{{ caliopen_version }}-py2.py3-none-any.whl
+  tags:
+    - deploy
 
 - name: install some missing python dependencies
   pip:

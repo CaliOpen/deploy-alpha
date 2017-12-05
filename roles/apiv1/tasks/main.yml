@@ -21,6 +21,8 @@
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
+  tags:
+    - deploy
 
 - name: install caliopen packages
   shell: cd /var/tmp && pip install {{ item }}
@@ -28,6 +30,8 @@
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
+  tags:
+    - deploy
 
 - name: install some missing python dependencies
   pip:
@@ -40,12 +44,16 @@
   template:
     src: apiv1.ini.j2
     dest: /etc/caliopen/apiv1.ini
+  tags:
+    - deploy
 
 - name: install swagger.json
   copy:
     src: "{{ dist_directory }}/{{ caliopen_version }}/swagger.json"
     dest: /etc/caliopen/swagger.json
     mode: 0644
+  tags:
+    - deploy
 
 - name: configure nginx
   template:
