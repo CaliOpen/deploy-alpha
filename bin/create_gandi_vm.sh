@@ -5,11 +5,11 @@ gandi vlan create --name alpha_vlan --datacenter FR-SD3 --subnet 192.168.1.0/24 
 gandi vm create --memory 1024 --hostname gw1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.254 --ip-version 4
 
 # Store machines
-gandi vm create --memory 3072 --hostname store1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.10 --ip-version 6
-gandi vm create --memory 3072 --hostname store2 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.11 --ip-version 6
-gandi vm create --memory 3072 --hostname store3 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.12 --ip-version 6
-gandi vm create --memory 3072 --hostname store4 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.13 --ip-version 6
-gandi vm create --memory 3072 --hostname store5 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.14 --ip-version 6
+gandi vm create --memory 6144 --hostname store1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.10 --ip-version 6
+gandi vm create --memory 6144 --hostname store2 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.11 --ip-version 6
+gandi vm create --memory 6144 --hostname store3 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.12 --ip-version 6
+gandi vm create --memory 6144 --hostname store4 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.13 --ip-version 6
+gandi vm create --memory 6144 --hostname store5 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.14 --ip-version 6
 
 # Cache
 gandi vm create --memory 1024 --hostname cache1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.50 --ip-version 6
