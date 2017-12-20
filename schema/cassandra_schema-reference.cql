@@ -282,6 +282,7 @@ CREATE TABLE caliopen.message (
     importance_level int,
     is_answered boolean,
     is_draft boolean,
+    is_received boolean,
     is_unread boolean,
     parent_id uuid,
     participants list<frozen<participant>>,
