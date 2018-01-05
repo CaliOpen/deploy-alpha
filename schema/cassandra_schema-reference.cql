@@ -93,14 +93,6 @@ CREATE TYPE caliopen.postal_address (
     type text
 );
 
-CREATE TYPE caliopen.resource_tag (
-    date_insert timestamp,
-    importance_level int,
-    name text,
-    tag_id uuid,
-    type text
-);
-
 CREATE TYPE caliopen.social_identity (
     social_id uuid,
     name text,
@@ -290,7 +282,7 @@ CREATE TABLE caliopen.message (
     privacy_features map<text, text>,
     raw_msg_id uuid,
     subject text,
-    tags list<frozen<resource_tag>>,
+    tags list<text>,
     type text,
     PRIMARY KEY (message_id, user_id)
 ) WITH CLUSTERING ORDER BY (user_id ASC)
@@ -408,7 +400,7 @@ CREATE TABLE caliopen.contact (
     phones list<frozen<phone>>,
     pi frozen<pimodel>,
     privacy_features map<text, text>,
-    tags list<frozen<resource_tag>>,
+    tags list<text>,
     title text,
     PRIMARY KEY (user_id, contact_id)
 ) WITH CLUSTERING ORDER BY (contact_id ASC)
@@ -564,13 +556,13 @@ CREATE TABLE caliopen.discussion_recipient_lookup (
 
 CREATE TABLE caliopen.user_tag (
     user_id uuid,
-    tag_id uuid,
+    name text,
     date_insert timestamp,
     importance_level int,
-    name text,
+    label text,
     type text,
-    PRIMARY KEY (user_id, tag_id)
-) WITH CLUSTERING ORDER BY (tag_id ASC)
+    PRIMARY KEY (user_id, name)
+) WITH CLUSTERING ORDER BY (name ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
     AND comment = ''
