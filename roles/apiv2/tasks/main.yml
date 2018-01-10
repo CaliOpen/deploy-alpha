@@ -1,6 +1,6 @@
 - name: create caliopen configuration directory
   file:
-    path: /etc/caliopen
+    path: /etc/caliopen/notifiers
     state: directory
 
 - name: api configuration file
@@ -15,6 +15,11 @@
     mode: 0644
   tags:
     - deploy
+
+- name: install notifiers templates
+  copy:
+    src: notifiers/templates
+    dest: /etc/caliopen/notifiers
 
 - name: copy caliopen binary
   copy:
