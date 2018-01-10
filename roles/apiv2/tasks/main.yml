@@ -2,6 +2,8 @@
   file:
     path: /etc/caliopen/notifiers
     state: directory
+  tags:
+    - deploy
 
 - name: api configuration file
   template: src=caliopen-api.yaml.j2 dest=/etc/caliopen/caliopen-api.yaml
@@ -20,6 +22,8 @@
   copy:
     src: notifiers/templates
     dest: /etc/caliopen/notifiers
+  tags:
+    - deploy
 
 - name: copy caliopen binary
   copy:
