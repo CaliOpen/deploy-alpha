@@ -1,9 +1,11 @@
 -- migrate from a 0 0.7.0 to a 0.8.0 caliopen cassandra schema
-ALTER TABLE caliopen.message DROP column tags;
-ALTER TABLE caliopen.contact DROP column tags;
+ALTER TABLE caliopen.message DROP tags;
+ALTER TABLE caliopen.contact DROP tags;
 
-ALTER TABLE caliopen.message ADD column tags list<text>;
-ALTER TABLE caliopen.contact ADD column tags list<text>;
+
+
+ALTER TABLE caliopen.message ADD tagnames list<text>;
+ALTER TABLE caliopen.contact ADD tagnames list<text>;
 
 DROP type caliopen.resource_tag;
 
