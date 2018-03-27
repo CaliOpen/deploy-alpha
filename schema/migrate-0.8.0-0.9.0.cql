@@ -52,7 +52,7 @@ CREATE TABLE caliopen.public_key (
     kty text,
     label text,
     resource_type text,
-    "use" text,
+    'use' text,
     x varint,
     y varint,
     PRIMARY KEY (user_id, resource_id, key_id)
@@ -144,3 +144,12 @@ CREATE TABLE caliopen.notification_ttl (
 // More dangerous operations
 ALTER TABLE caliopen.contact DROP deleted;
 ALTER TABLE caliopen.contact ADD deleted timestamp;
+
+// Configure notification TTLs
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-lived', 'short lieved'), 60);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-lived', 'mid lieved', 3600);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-lived', 'long lieved', 43200);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-term', 'short term', 86400);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-term', 'mid term', 172800);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-term', 'long term', 1728000);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('forever', 'forever', 0);
