@@ -52,7 +52,7 @@ CREATE TABLE caliopen.public_key (
     kty text,
     label text,
     resource_type text,
-    'use' text,
+    "use" text,
     x varint,
     y varint,
     PRIMARY KEY (user_id, resource_id, key_id)
