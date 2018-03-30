@@ -146,9 +146,9 @@ ALTER TABLE caliopen.contact DROP deleted;
 ALTER TABLE caliopen.contact ADD deleted timestamp;
 
 // Configure notification TTLs
-INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-lived', 'short lieved'), 60);
-INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-lived', 'mid lieved', 3600);
-INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-lived', 'long lieved', 43200);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-lived', 'short lived'), 60);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-lived', 'mid lived', 3600);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-lived', 'long lived', 43200);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-term', 'short term', 86400);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-term', 'mid term', 172800);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-term', 'long term', 1728000);
