@@ -59,3 +59,10 @@ LDAConfig:
   # outbound
   out_topic: outboundSMTP                                # NATS topic to listen to
   nats_listeners: 2                                      # number of concurrent nats listeners
+
+  # notifications
+  contacts_topic: contactAction
+  NotifierConfig:
+    base_url: https://{{ caliopen_domain_name }}
+    admin_username: admin
+    templates_path: "/etc/caliopen/notifiers/templates/"

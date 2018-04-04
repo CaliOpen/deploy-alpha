@@ -1,12 +1,5 @@
 CREATE KEYSPACE caliopen WITH replication = {'class': 'SimpleStrategy', 'replication_factor': '1'}  AND durable_writes = true;
 
-CREATE TYPE caliopen.device_location (
-    address text,
-    type text,
-    country text,
-    privacy_features frozen<map<text, text>>
-);
-
 CREATE TYPE caliopen.email (
     address text,
     email_id uuid,
@@ -40,6 +33,7 @@ CREATE TYPE caliopen.message_attachment (
     file_name text,
     is_inline boolean,
     size int,
+    temp_id uuid,
     url text,
     mime_boundary text
 );
@@ -102,46 +96,29 @@ CREATE TYPE caliopen.social_identity (
 
 CREATE TABLE caliopen.public_key (
     user_id uuid,
-    contact_id uuid,
-    name text,
+    resource_id uuid,
+    key_id uuid,
+    alg text,
+    crv text,
     date_insert timestamp,
     date_update timestamp,
     expire_date timestamp,
     fingerprint text,
     key text,
-    privacy_features map<text, text>,
-    size int,
-    type text,
-    PRIMARY KEY (user_id, contact_id, name)
-) WITH CLUSTERING ORDER BY (contact_id ASC, name ASC)
+    kty text,
+    label text,
+    resource_type text,
+    "use" text,
+    x varint,
+    y varint,
+    PRIMARY KEY (user_id, resource_id, key_id)
+) WITH CLUSTERING ORDER BY (resource_id ASC, key_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
-CREATE TABLE caliopen.device_public_key (
-    user_id uuid,
-    device_id uuid,
-    fingerprint text,
-    date_insert timestamp,
-    is_current boolean,
-    public_key text,
-    PRIMARY KEY (user_id, device_id, fingerprint)
-) WITH CLUSTERING ORDER BY (device_id ASC, fingerprint ASC)
-    AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
-    AND comment = ''
-    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -162,10 +139,11 @@ CREATE TABLE caliopen.settings (
     notification_message_preview text,
     notification_sound_enabled boolean
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -186,10 +164,11 @@ CREATE TABLE caliopen.filter_rule (
     PRIMARY KEY (user_id, rule_id)
 ) WITH CLUSTERING ORDER BY (rule_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -203,10 +182,11 @@ CREATE TABLE caliopen.user_name (
     name text PRIMARY KEY,
     user_id uuid
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -225,10 +205,11 @@ CREATE TABLE caliopen.discussion (
     PRIMARY KEY (user_id, discussion_id)
 ) WITH CLUSTERING ORDER BY (discussion_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -246,10 +227,11 @@ CREATE TABLE caliopen.contact_lookup (
     PRIMARY KEY (user_id, value, type)
 ) WITH CLUSTERING ORDER BY (value ASC, type ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -282,15 +264,16 @@ CREATE TABLE caliopen.message (
     privacy_features map<text, text>,
     raw_msg_id uuid,
     subject text,
-    tags list<text>,
+    tagnames list<text>,
     type text,
     PRIMARY KEY (message_id, user_id)
 ) WITH CLUSTERING ORDER BY (user_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -306,10 +289,11 @@ CREATE TABLE caliopen.raw_message (
     raw_size int,
     uri text
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -325,10 +309,11 @@ CREATE TABLE caliopen.user_raw_lookup (
     PRIMARY KEY (user_id, raw_msg_id)
 ) WITH CLUSTERING ORDER BY (raw_msg_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -341,10 +326,11 @@ CREATE TABLE caliopen.user_raw_lookup (
 CREATE TABLE caliopen.reserved_name (
     name text PRIMARY KEY
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -365,10 +351,11 @@ CREATE TABLE caliopen.remote_identity (
     PRIMARY KEY (user_id, identifier)
 ) WITH CLUSTERING ORDER BY (identifier ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -386,7 +373,7 @@ CREATE TABLE caliopen.contact (
     avatar text,
     date_insert timestamp,
     date_update timestamp,
-    deleted boolean,
+    deleted timestamp,
     emails list<frozen<email>>,
     family_name text,
     given_name text,
@@ -400,15 +387,16 @@ CREATE TABLE caliopen.contact (
     phones list<frozen<phone>>,
     pi frozen<pimodel>,
     privacy_features map<text, text>,
-    tags list<text>,
+    tagnames list<text>,
     title text,
     PRIMARY KEY (user_id, contact_id)
 ) WITH CLUSTERING ORDER BY (contact_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -425,10 +413,11 @@ CREATE TABLE caliopen.discussion_thread_lookup (
     PRIMARY KEY (user_id, external_root_msg_id)
 ) WITH CLUSTERING ORDER BY (external_root_msg_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -453,10 +442,11 @@ CREATE TABLE caliopen.user (
     privacy_features map<text, text>,
     recovery_email text
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -470,21 +460,22 @@ CREATE TABLE caliopen.device (
     user_id uuid,
     device_id uuid,
     date_insert timestamp,
-    fingerprint text,
-    last_seen timestamp,
-    locations list<frozen<device_location>>,
+    date_revoked timestamp,
+    ip_creation text,
     name text,
+    pi frozen<pimodel>,
     privacy_features map<text, text>,
-    signature_key text,
     status text,
     type text,
+    user_agent text,
     PRIMARY KEY (user_id, device_id)
 ) WITH CLUSTERING ORDER BY (device_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -501,10 +492,11 @@ CREATE TABLE caliopen.discussion_list_lookup (
     PRIMARY KEY (user_id, list_id)
 ) WITH CLUSTERING ORDER BY (list_id ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -521,10 +513,11 @@ CREATE TABLE caliopen.local_identity (
     type text,
     user_id uuid
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -541,10 +534,11 @@ CREATE TABLE caliopen.discussion_recipient_lookup (
     PRIMARY KEY (user_id, recipient_name)
 ) WITH CLUSTERING ORDER BY (recipient_name ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -564,10 +558,11 @@ CREATE TABLE caliopen.user_tag (
     PRIMARY KEY (user_id, name)
 ) WITH CLUSTERING ORDER BY (name ASC)
     AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -581,10 +576,77 @@ CREATE TABLE caliopen.user_recovery_email (
     recovery_email text PRIMARY KEY,
     user_id uuid
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL","rows_per_partition":"ALL"}'
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+CREATE TABLE caliopen.device_location (
+    user_id uuid,
+    device_id uuid,
+    address text,
+    country text,
+    type text,
+    PRIMARY KEY (user_id, device_id, address)
+) WITH CLUSTERING ORDER BY (device_id ASC, address ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+CREATE TABLE caliopen.notification (
+    user_id uuid,
+    notif_id timeuuid,
+    body blob,
+    emitter text,
+    reference text,
+    type ascii,
+    PRIMARY KEY (user_id, notif_id)
+) WITH CLUSTERING ORDER BY (notif_id ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+CREATE TABLE caliopen.notification_ttl (
+    ttl_code ascii PRIMARY KEY,
+    description text,
+    ttl_duration int
+) WITH bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000

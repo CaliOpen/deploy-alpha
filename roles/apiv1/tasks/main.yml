@@ -8,6 +8,26 @@
        - python-dev
        - libffi-dev
 
+- name: create geoip2 databases directory
+  file:
+    path: /var/lib/geoip2
+    state: directory
+  tags:
+    - geoip2
+
+- name: install geoip2 databases
+  unarchive:
+    src: http://geolite.maxmind.com/download/geoip/database/GeoLite2-Country.tar.gz
+    dest: /var/lib/geoip2/
+    remote_src: yes
+  tags:
+    - geoip2
+
+- name: install geoip2 databases in top directory
+  shell: mv /var/lib/geoip2/GeoLite2-Country_*/GeoLite2-Country.mmdb /var/lib/geoip2/GeoLite2-Country.mmdb
+  tags:
+    - geoip2
+
 - name: configure uwsgi
   template:
     src: apiv1.uwsgi.j2
@@ -19,6 +39,7 @@
     dest: /var/tmp
   with_items:
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
   tags:
@@ -28,6 +49,7 @@
   shell: cd /var/tmp && pip install {{ item }}
   with_items:
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
   tags:
