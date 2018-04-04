@@ -1,9 +1,10 @@
 
+
 // Remove unused or bad structure TYPE and TABLES
+DROP TABLE caliopen.device;
 DROP TYPE caliopen.device_location;
 DROP TABLE caliopen.public_key;
 DROP TABLE caliopen.device_public_key;
-DROP TABLE caliopen.device;
 
 ALTER TYPE caliopen.message_attachment ADD temp_id uuid;
 
@@ -28,7 +29,6 @@ CREATE TABLE caliopen.device (
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -62,7 +62,6 @@ CREATE TABLE caliopen.public_key (
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -85,7 +84,6 @@ CREATE TABLE caliopen.device_location (
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -111,7 +109,6 @@ CREATE TABLE caliopen.notification (
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -130,7 +127,6 @@ CREATE TABLE caliopen.notification_ttl (
     AND comment = ''
     AND compaction = {'class': 'SizeTieredCompactionStrategy'}
     AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
     AND dclocal_read_repair_chance = 0.1
     AND default_time_to_live = 0
     AND gc_grace_seconds = 864000
@@ -146,7 +142,7 @@ ALTER TABLE caliopen.contact DROP deleted;
 ALTER TABLE caliopen.contact ADD deleted timestamp;
 
 // Configure notification TTLs
-INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-lived', 'short lived'), 60);
+INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-lived', 'short lived', 60);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('mid-lived', 'mid lived', 3600);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('long-lived', 'long lived', 43200);
 INSERT INTO caliopen.notification_ttl (ttl_code, description, ttl_duration) values ('short-term', 'short term', 86400);
