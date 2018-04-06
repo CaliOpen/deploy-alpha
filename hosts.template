@@ -29,6 +29,7 @@ node_exporter_version=0.14.0
 [monitoring:children]
 prometheus
 monitor
+kibana
 
 [caliopen:children]
 api
@@ -81,6 +82,9 @@ worker1 ansible_host=ip_worker1 ansible_user=root backend_ip=backend_worker1
 
 [prometheus]
 prometheus1 ansible_host=ip_prometheus1 ansible_user=root backend_ip=backend_prometheus1
+
+[kibana]
+kibana1 ansible_host=ip_kibana1 ansible_user=root backend_ip=backend_kibana1
 
 [monitor]
 monitor1 ansible_host=ip_monitor1 ansible_user=root backend_ip=backend_monitor1
