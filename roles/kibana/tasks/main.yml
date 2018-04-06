@@ -7,12 +7,6 @@
 - name: add es apt repositories
   shell: echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-5.x.list
 
-- name: install nginx kibana pass
-  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
-  with_items:
-    - ".htpasswd.pass"
-    - ".htpasswd"
-
 - name: update packages
   apt:
       update_cache: yes

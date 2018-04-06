@@ -23,6 +23,12 @@
 - name: start grafana service
   service: name=grafana-server state=started
 
+- name: install nginx kibana pass
+  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
+  with_items:
+    - ".htpasswd.pass"
+    - ".htpasswd"
+
 - name: configure nginx
   template:
     src: monitor.nginx.j2
