@@ -24,7 +24,7 @@
   service: name=grafana-server state=started
 
 - name: install nginx kibana pass
-  copy: src={{ item }} dest=/etc/nginx/certs/{{ item }}
+  copy: src={{ item }} dest=/etc/nginx/{{ item }}
   with_items:
     - ".htpasswd.pass"
     - ".htpasswd"
