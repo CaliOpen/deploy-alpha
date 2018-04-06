@@ -1,0 +1,6 @@
+- hosts: kibana
+  roles:
+    - common
+    - iptables
+    - java8
+    - kibana
