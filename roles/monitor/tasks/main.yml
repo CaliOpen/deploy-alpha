@@ -33,22 +33,23 @@
   template:
     src: monitor.nginx.j2
     dest: /etc/nginx/sites-enabled/monitor    
-  notify: restart nginx
 
 - name: configure kibana
   template:
     src: monitor.kibana.j2
     dest: /etc/nginx/sites-enabled/kibana    
-  notify: restart nginx
 
 - name: configure prometheus
   template:
     src: monitor.prometheus.j2
     dest: /etc/nginx/sites-enabled/prometheus
-  notify: restart nginx
 
 - name: configure grafana
   template:
     src: monitor.grafana.j2
     dest: /etc/nginx/sites-enabled/grafana
-  notify: restart nginx
+
+- name: restart service nginx
+  service:
+    name: nginx
+    state: restarted
