@@ -23,7 +23,7 @@
 - name: start grafana service
   service: name=grafana-server state=started
 
-- name: install nginx kibana pass
+- name: install nginx kibana prometheus pass
   copy: src={{ item }} dest=/etc/nginx/{{ item }}
   with_items:
     - ".htpasswd.pass"
@@ -33,4 +33,23 @@
   template:
     src: monitor.nginx.j2
     dest: /etc/nginx/sites-enabled/monitor    
-  notify: restart nginx
+
+- name: configure kibana
+  template:
+    src: monitor.kibana.j2
+    dest: /etc/nginx/sites-enabled/kibana    
+
+- name: configure prometheus
+  template:
+    src: monitor.prometheus.j2
+    dest: /etc/nginx/sites-enabled/prometheus
+
+- name: configure grafana
+  template:
+    src: monitor.grafana.j2
+    dest: /etc/nginx/sites-enabled/grafana
+
+- name: restart service nginx
+  service:
+    name: nginx
+    state: restarted
