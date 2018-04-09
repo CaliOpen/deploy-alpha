@@ -3,4 +3,5 @@
     - common
     - iptables
     - java8
+    - commonelk
     - kibana

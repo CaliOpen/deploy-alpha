@@ -1,22 +1,3 @@
-- name: install elasticsearch pgp key
-  apt_key:
-    id: D88E42B4
-    keyserver: pgp.mit.edu
-    state: present
-
-- name: add es apt repositories
-  shell: echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee /etc/apt/sources.list.d/elastic-5.x.list
-
-- name: update packages
-  apt:
-      update_cache: yes
-      upgrade: dist
-
-- name: add apt-transport-https dependency
-  apt:
-    name: apt-transport-https
-    state: present
-
 - name: install elasticsearch
   apt:
     name: elasticsearch
@@ -45,4 +26,3 @@
   systemd:
     name: kibana 
     state: started
-

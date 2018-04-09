@@ -4,4 +4,5 @@
     - iptables
     - java8
     - cassandra
+    - commonelk
     - elasticsearch
