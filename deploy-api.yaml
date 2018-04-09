@@ -6,4 +6,6 @@
     - nginx
     - apiv1
     - apiv2
+    - commonelk
+    - filebeat
   
