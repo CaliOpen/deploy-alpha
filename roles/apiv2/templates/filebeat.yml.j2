@@ -90,7 +90,7 @@ filebeat.prospectors:
 #----------------------------- Logstash output --------------------------------
 output.logstash:
   # The Logstash hosts
-  hosts: ["{{ hostvars[logstash1]['backend_ip']  }}:5044"]
+  hosts: [{% for host in groups['logstash']%}"{{ hostvars[host]['backend_ip'] }}:5044",{% endfor %}]
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications
