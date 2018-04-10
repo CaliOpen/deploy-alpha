@@ -19,6 +19,7 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
+    #- /var/log/uwsgi/app/apiv1.log
     - /var/log/daemon.log
     #- c:\programdata\elasticsearch\logs\*
 
@@ -91,6 +92,7 @@ filebeat.prospectors:
 output.logstash:
   # The Logstash hosts
   hosts: [{% for host in groups['logstash']%}"{{ hostvars[host]['backend_ip'] }}:5044",{% endfor %}]
+
 
   # Optional SSL. By default is off.
   # List of root certificates for HTTPS server verifications

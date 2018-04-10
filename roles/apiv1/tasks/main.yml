@@ -75,15 +75,3 @@
     mode: 0644
   tags:
     - deploy
-
-- name: configure nginx
-  template:
-    src: apiv1.nginx.j2
-    dest: /etc/nginx/sites-enabled/apiv1 
-  notify: restart nginx
-
-- name: configure filebeat
-  template: 
-    src: filebeat.yml.j2
-    dest: /etc/filebeat/filebeat.yml
-  notify: restart filebeat
