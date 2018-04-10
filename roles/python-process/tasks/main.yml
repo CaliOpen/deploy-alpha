@@ -9,3 +9,14 @@
     dest: /etc/caliopen/caliopen.yaml
   tags:
     - deploy
+
+- name: download a decent pip version
+  get_url:
+    url: https://bootstrap.pypa.io/ez_setup.py
+    dest: /var/tmp
+
+- name: install pip
+  shell: python /var/tmp/ez_setup.py
+
+- name: upgrade pip
+  shell: pip install --upgrade pip
