@@ -3,7 +3,6 @@
   with_items:
        - uwsgi
        - uwsgi-plugin-python
-       - python-pip
        - gcc
        - python-dev
        - libffi-dev
