@@ -172,3 +172,6 @@ hosts
 
 # ansible vault password file
 .vault_pass.txt
+
+# nginx password
+.htpasswd
