@@ -39,6 +39,7 @@
   with_items:
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
   tags:
@@ -49,6 +50,7 @@
   with_items:
     - caliopen_storage-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_pi-{{ caliopen_version }}-py2.py3-none-any.whl
+    - caliopen_pgp-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_main-{{ caliopen_version }}-py2.py3-none-any.whl
     - caliopen_api-{{ caliopen_version }}-py2.py3-none-any.whl
   tags:
