@@ -1,0 +1,2 @@
+- name: restart rsyslog
+  service: name=nginx state=restarted
