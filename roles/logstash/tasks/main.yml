@@ -9,6 +9,9 @@
 - name: set logstash pipeline
   template: src=logstash.conf dest=/etc/logstash/conf.d/logstash.conf
 
+- name: configure logstash jvm
+  template: src=jvm.options dest=/etc/logstash/jvm.options
+
 - name: start logstash
   systemd:
     name: logstash
