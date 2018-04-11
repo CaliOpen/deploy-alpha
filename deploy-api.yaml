@@ -4,6 +4,8 @@
     - iptables
     - python-process
     - nginx
+    - commonelk
+    - filebeat
     - apiv1
     - apiv2
   

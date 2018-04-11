@@ -1,8 +1,7 @@
-- hosts: store
+- hosts: logstash
   roles:
     - common
     - iptables
     - java8
-    - cassandra
     - commonelk
-    - elasticsearch
+    - logstash

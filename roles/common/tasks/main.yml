@@ -51,3 +51,10 @@
 
 - name: template /etc/hosts
   template: src=hosts.j2 dest=/etc/hosts
+
+- name: copy syslog file
+  copy:
+    src: rsyslog.conf
+    dest: /etc/rsyslog.conf
+    mode: 0644
+  notify: restart rsyslog

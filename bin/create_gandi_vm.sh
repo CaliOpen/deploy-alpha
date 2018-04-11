@@ -22,6 +22,7 @@ gandi vm create --memory 1024 --hostname mq1 --image "Debian 8" --size 10G --dat
 gandi vm create --memory 2048 --hostname prometheus1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.200 --ip-version 6
 gandi vm create --memory 1024 --hostname monitor1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.201 --ip-version 4
 gandi vm create --memory 4096 --hostname kibana1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.202 --ip-version 6
+gandi vm create --memory 2048 --hostname logstash1 --image "Debian 8" --size 50G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.203 --ip-version 6
 
 # Api machines
 gandi vm create --memory 1024 --hostname api1 --image "Debian 8" --size 10G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.100 --ip-version 4
