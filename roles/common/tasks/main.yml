@@ -58,3 +58,15 @@
     dest: /etc/rsyslog.conf
     mode: 0644
   notify: restart rsyslog
+
+- name: copy logrotate syslog file
+  copy:
+    src: logrotate-rsyslog.conf
+    dest: /etc/logrotate.d/rsyslog
+    mode: 0644
+
+- name: copy logrotate nginx file
+  copy:
+    src: logrotate-nginx.conf
+    dest: /etc/logrotate.d/nginx
+    mode: 0644
