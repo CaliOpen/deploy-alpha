@@ -8,4 +8,4 @@
     - filebeat
     - apiv1
     - apiv2
-  
+    - apicommon
