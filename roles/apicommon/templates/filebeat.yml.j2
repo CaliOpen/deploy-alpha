@@ -7,6 +7,43 @@
 # You can find the full configuration reference here:
 # https://www.elastic.co/guide/en/beats/filebeat/index.html
 
+#==========================  Modules configuration ============================
+filebeat.modules:
+
+#-------------------------------- Nginx Module -------------------------------
+- module: nginx
+  # Access logs
+  access:
+    enabled: true
+
+    # Ingest Node pipeline to use. Options are `with_plugins` (default)
+    # and `no_plugins`. Use `no_plugins` if you don't have the geoip or
+    # the user agent Node ingest plugins installed.
+    #var.pipeline: with_plugins
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths: /var/log/filebeat/nginx-access.log
+
+    # Prospector configuration (advanced). Any prospector configuration option
+    # can be added under this section.
+    prospector:
+      fields:
+        type: "nginx-log"
+      exclude_lines: ['^192\.168\.1\.[0-9]+']
+
+  # Error logs
+  error:
+    enabled: true
+
+    # Set custom paths for the log files. If left empty,
+    # Filebeat will choose the paths depending on your OS.
+    #var.paths: /var/log/filebeat/nginx-error.log
+
+    # Prospector configuration (advanced). Any prospector configuration option
+    # can be added under this section.
+    #prospector:
+
 #=========================== Filebeat prospectors =============================
 
 filebeat.prospectors:
@@ -19,9 +56,11 @@ filebeat.prospectors:
 
   # Paths that should be crawled and fetched. Glob based paths.
   paths:
-    #- /var/log/api.log
+    #- /var/log/uwsgi/app/apiv1.log
     - /var/log/user.log
-    #- c:\programdata\elasticsearch\logs\*
+
+  fields:
+    type: "syslog"
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
