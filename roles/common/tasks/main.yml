@@ -32,6 +32,7 @@
        - iptables
        - fail2ban
        - iptables-persistent
+       - logrotate
 
 - name: force reload of fact
   setup:
