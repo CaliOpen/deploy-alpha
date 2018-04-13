@@ -3,5 +3,7 @@
     - common
     - iptables
     - nginx
+    - commonelk
+    - filebeat
     - client
     - maintenance
