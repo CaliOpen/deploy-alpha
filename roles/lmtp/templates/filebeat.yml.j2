@@ -28,6 +28,7 @@ filebeat.prospectors:
     type: "syslog"
     app: "caliopen_lmtpd"
   include_lines: ['.*caliopen_lmtpd.*']
+  exclude_files: ['daemon\.log.[1-9]+']
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
   # matching any regular expression from the list.
