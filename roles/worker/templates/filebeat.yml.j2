@@ -28,6 +28,7 @@ filebeat.prospectors:
     type: "syslog"
     app: "python_worker1"
   include_lines: ['.*python.*']
+  exclude_lines: ['.*DEBUG.*heartbeat.*','.*DEBUG.*Received options.*']
   exclude_files: ['daemon\.log.[1-9]+']
 
   # Exclude lines. A list of regular expressions to match. It drops the lines that are
