@@ -3,4 +3,6 @@
     - common
     - iptables
     - python-process
+    - commonelk
+    - filebeat
     - worker
