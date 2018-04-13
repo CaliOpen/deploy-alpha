@@ -65,3 +65,9 @@
 
 - name: start web client service
   service: name=web-client state=started enabled=yes
+
+- name: configure filebeat
+  template:
+    src: filebeat.yml.j2
+    dest: /etc/filebeat/filebeat.yml
+  notify: restart filebeat
