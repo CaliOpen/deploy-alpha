@@ -31,6 +31,7 @@ filebeat.modules:
       fields:
         type: "nginx-log"
       exclude_lines: ['^192\.168\.1\.[0-9]+']
+      exclude_files: ['access\.log.[1-9]+']
 
   # Error logs
   error:
