@@ -39,8 +39,17 @@
     path: /etc/prometheus
     state: directory
 
+- name: create alerting directory
+  file:
+    path: /etc/prometheus/alerting-rules
+    state: directory
+
 - name: upload rule files
-  copy: src=rule1 dest=/etc/prometheus/rule1
+  - copy: 
+      src= "{{ item }}"
+      dest=/etc/prometheus/alerting-rules/
+    with_fileglob:
+      - *.rule
 
 - name: configure prometheus
   template: src=prometheus.yml.j2 dest=/etc/prometheus/prometheus.yml
