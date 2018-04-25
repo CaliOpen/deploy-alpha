@@ -53,6 +53,13 @@
 - name: template /etc/hosts
   template: src=hosts.j2 dest=/etc/hosts
 
+- name: copy fail2ban jail file
+  copy:
+    src: jail.local
+    dest: /etc/fail2ban/jail.local
+    mode: 0644
+  notify: restart fail2ban
+
 - name: copy syslog file
   copy:
     src: rsyslog.conf

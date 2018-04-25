@@ -1,2 +1,5 @@
 - name: restart rsyslog
   service: name=rsyslog state=restarted
+
+- name: restart fail2ban
+  command: fail2ban-client reload
