@@ -3,8 +3,8 @@ Description=Nats prometheus exporter
 
 [Service]
 Restart=always
-ExecStart=/var/tmp/prometheus-nats-exporter -connz -routez -subz -a {{ facter_ipaddress_eth1 }} http://{{ facter_ipaddress_eth1}}:8222
-ExecStop=pkill prometheus-nats-exporter
+ExecStart=/usr/local/sbin/prometheus-nats-exporter -connz -routez -subz -varz -a {{ facter_ipaddress_eth1 }} http://{{ facter_ipaddress_eth1}}:8222
+ExecStop=pkill /usr/local/sbin/prometheus-nats-exporter
 
 [Install]
 WantedBy=local.target
