@@ -7,13 +7,3 @@ ALERT InstanceDown
     summary = "Instance {{ $labels.instance }} down",
     description = "{{ $labels.instance }} of job {{ $labels.job }} has been down for more than 5 minutes.",
   }
-
-
-ALERT FilesystemFull
-  IF node_filesystem_free / node_filesystem_size < 0.3
-  FOR 5m
-  LABELS { severity = "critical" }
-  ANNOTATIONS {
-    summary = "Filesystem {{ $labels.instance }} full",
-    description = "{{ $labels.instance }} of job {{ $labels.job }} free space less than 30%.",
-  }
