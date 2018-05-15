@@ -250,6 +250,7 @@ CREATE TABLE caliopen.message (
     date timestamp,
     date_delete timestamp,
     date_insert timestamp,
+    date_sort timestamp,
     discussion_id uuid,
     external_references frozen<external_references>,
     identities list<frozen<identity>>,
