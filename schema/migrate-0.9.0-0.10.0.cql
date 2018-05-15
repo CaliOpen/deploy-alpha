@@ -1,0 +1,1 @@
+ALTER TABLE caliopen.message ADD date_sort timestamp;

@@ -2,7 +2,7 @@ delivery_agent:
     direct: True
 
 elasticsearch:
-    mappings_version: v4
+    mappings_version: v5
     url:
 {% for host in groups['store'] %}
         - http://{{ hostvars[host]['backend_ip'] }}:9200
