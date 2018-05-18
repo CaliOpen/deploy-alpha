@@ -67,3 +67,6 @@ blacklistes:
 qualifiers:
     geoip:
         file: "/var/lib/geoip2/GeoLite2-Country.mmdb"
+
+apiV1:
+    strict_patch: false
