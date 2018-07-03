@@ -95,8 +95,8 @@ CREATE TYPE caliopen.social_identity (
 );
 
 CREATE TABLE caliopen.message (
-    message_id uuid,
     user_id uuid,
+    message_id uuid,
     attachments list<frozen<message_attachment>>,
     body_html text,
     body_plain text,
@@ -120,8 +120,8 @@ CREATE TABLE caliopen.message (
     subject text,
     tagnames list<text>,
     type text,
-    PRIMARY KEY (message_id, user_id)
-) WITH CLUSTERING ORDER BY (user_id ASC)
+    PRIMARY KEY (user_id, message_id)
+) WITH CLUSTERING ORDER BY (message_id ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
@@ -371,6 +371,7 @@ CREATE TABLE caliopen.user_name (
 
 CREATE TABLE caliopen.raw_message (
     raw_msg_id uuid PRIMARY KEY,
+    delivered boolean,
     raw_data blob,
     raw_size int,
     uri text
@@ -392,6 +393,7 @@ CREATE TABLE caliopen.raw_message (
 CREATE TABLE caliopen.user (
     user_id uuid PRIMARY KEY,
     contact_id uuid,
+    date_delete timestamp,
     date_insert timestamp,
     family_name text,
     given_name text,
@@ -573,14 +575,15 @@ CREATE TABLE caliopen.settings (
 
 CREATE TABLE caliopen.remote_identity (
     user_id uuid,
-    identifier text,
+    remote_id uuid,
+    credentials map<text, text>,
     display_name text,
     infos map<text, text>,
     last_check timestamp,
     status text,
     type text,
-    PRIMARY KEY (user_id, identifier)
-) WITH CLUSTERING ORDER BY (identifier ASC)
+    PRIMARY KEY (user_id, remote_id)
+) WITH CLUSTERING ORDER BY (remote_id ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
