@@ -23,8 +23,8 @@ ApiConfig:
       use_vault: true
       vault_settings:
         url: https://{{ hostvars['object_store1']['backend_ip'] }}:8200
-        username: {{ vault_username }}
-        password: {{ vault_password }}
+        username: {{ vault_api_username }}
+        password: {{ vault_api_password }}
   IndexConfig:
     index_name: elasticsearch
     index_settings:

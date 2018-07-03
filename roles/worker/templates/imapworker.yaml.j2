@@ -25,8 +25,8 @@ store_settings:
   use_vault: false
   vault_settings:
     url: https://{{ hostvars['object_store1']['backend_ip'] }}:8200
-    username: {{ vault_username }}
-    password: {{ vault_password }}
+    username: {{ vault_worker_username }}
+    password: {{ vault_worker_password }}
 LDAConfig:
   broker_type: imap                                      # types are : smtp, imap, mailboxe, etc.
   lda_workers_size: 2                                    # number of concurrent workers
