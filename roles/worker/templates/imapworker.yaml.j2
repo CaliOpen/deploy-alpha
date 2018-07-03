@@ -9,7 +9,8 @@ store_settings:
   hosts: # many allowed
 {% for host in groups['store'] %}
       - {{ hostvars[host]['backend_ip'] }}
-{% endfor %}  keyspace: caliopen
+{% endfor %}
+  keyspace: caliopen
   consistency_level: 1
   raw_size_limit: 1048576                                 # max size in bytes for objects in db. Use S3 interface if larger.
   object_store: s3
