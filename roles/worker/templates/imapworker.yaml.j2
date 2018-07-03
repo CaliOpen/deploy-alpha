@@ -24,7 +24,7 @@ store_settings:
       temporary_attachments: caliopen-tmp-attachments    # bucket name to store draft attachments
   use_vault: false
   vault_settings:
-    url: https://{{ hostvars['object_store1']['backend_ip'] }}:8200
+    url: https://vault.{{ caliopen_domain_name }}:8200
     username: {{ vault_worker_username }}
     password: {{ vault_worker_password }}
 LDAConfig:
