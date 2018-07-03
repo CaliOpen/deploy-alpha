@@ -31,7 +31,7 @@ ALERT KeyEvictions
   }
 
 ALERT TotalMemoryUsed
-  IF (redis_memory_used_bytes / (0.95 *node_memory_MemTotal{instance="cache1.local:9100"})) > 0.8 
+  IF (redis_memory_used_bytes{instance="cache1.local:9121"} / node_memory_MemTotal{instance="cache1.local:9100"}) > 0.8 
   LABELS { severity = "critical" }
   ANNOTATIONS {
     summary = "{{ $labels.instance }}: Redis is using too much memory.",

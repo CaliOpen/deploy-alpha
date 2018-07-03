@@ -1,0 +1,9 @@
+ALERT xxxxxxxxxxxxx
+  IF xxxxxxxxxxxxxxxxxx
+  FOR 5m
+  LABELS { severity ="critical" }
+  ANNOTATIONS {
+    SUMMARY = "{{$labels.instance}}: ES cluster status yellow",
+    DESCRIPTION = "{{$labels.instance}}: Elasticsearch cluster has been in yellow state for more than 5 minutes)"
+}
+

@@ -1,5 +1,5 @@
 ALERT NodeCPUUsage
-  IF (100 - (avg by (instance) (irate(node_cpu{name="node-exporter",mode="idle"}[5m])) * 100)) > 75
+  IF (100 - (avg by (instance) (irate(node_cpu{mode="idle"}[5m])) * 100)) > 75
   FOR 2m
   LABELS {
     severity="critical"
