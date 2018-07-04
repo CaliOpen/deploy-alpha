@@ -11,10 +11,14 @@ object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
 caliopen_domain_name=alpha.caliopen.org
 caliopen_nameservers=["155.133.128.67", "155.133.128.65"]
+
+# Vault
 vault_api_username=api2
 vault_api_password=TO_BE_DEFINED
 vault_worker_username=imapworker
 vault_worker_password=TO_BE_DEFINED
+cert_path=/etc/vault/alpha.caliopen.org.crt
+key_path=/etc/vault/private/alpha.caliopen.org.key
 
 # Version of installed software out of host packaging
 

@@ -3,3 +3,4 @@
     - common
     - iptables
     - object-store
+    - vault

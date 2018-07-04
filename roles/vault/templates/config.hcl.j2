@@ -1,0 +1,14 @@
+storage "cassandra" {
+	hosts = [{% for host in groups['store']%}"{{ hostvars[host]['backend_ip'] }}",{% endfor %}]
+	consistency = "LOCAL_QUORUM"
+	protocol_version = 2
+	keyspace = "vault"
+	table = "entries"
+}
+
+listener "tcp" {
+  address = "{{ hostvars['object_store1']['backend_ip'] }}:8200"
+  disable_tls = 0
+  tls_cert_file = "{{ cert_path }}"
+  tls_key_file  = "(( key_path ))"
+}
