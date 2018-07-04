@@ -8,6 +8,6 @@ storage "cassandra" {
 
 listener "tcp" {
   address = "{{ hostvars['object_store1']['backend_ip'] }}:8200"
-  tls_cert_file = "{{ cert_path }}"
-  tls_key_file  = "{{ key_path }}"
+  tls_cert_file = "{{ vault_cert_path }}"
+  tls_key_file  = "{{ vault_key_path }}"
 }
