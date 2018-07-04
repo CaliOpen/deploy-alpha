@@ -1,3 +1,3 @@
 path "secret/ids/*" {
-	capabilities = ["write"]
+	capabilities = ["create"]
 }
