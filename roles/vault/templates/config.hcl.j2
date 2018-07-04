@@ -1,5 +1,5 @@
 storage "cassandra" {
-	hosts = [{% for host in groups['store']%}"{{ hostvars[host]['backend_ip'] }}",{% endfor %}]
+	hosts = "{% for host in groups['store']%}{{ hostvars[host]['backend_ip'] }}{%- if not loop.last -%},{% endif %}{% endfor %}"
 	consistency = "LOCAL_QUORUM"
 	protocol_version = 2
 	keyspace = "vault"
