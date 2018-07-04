@@ -52,3 +52,21 @@
     src: filebeat.yml.j2
     dest: /etc/filebeat/filebeat.yml
   notify: restart filebeat
+
+- name: install caliopen remote identities poller and fetcher
+  copy:
+    src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"
+    dest: /usr/local/bin
+  with_items:
+    - imapworker
+    - idpoller
+
+- name: copy caliopen imap worker configuration
+  template:
+    src: imapworker.yaml.j2
+    dest: /etc/caliopen/imapworker.yaml
+
+- name: copy caliopen identity poller configuration
+  template:
+    src: idpoller.yaml.j2
+    dest: /etc/caliopen/idpoller.yaml

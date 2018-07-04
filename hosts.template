@@ -12,6 +12,14 @@ object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
 caliopen_domain_name=alpha.caliopen.org
 caliopen_nameservers=["155.133.128.67", "155.133.128.65"]
 
+# Vault
+vault_api_username=api2
+vault_api_password=TO_BE_DEFINED
+vault_worker_username=imapworker
+vault_worker_password=TO_BE_DEFINED
+cert_path=/etc/vault/alpha.caliopen.org.crt
+key_path=/etc/vault/private/alpha.caliopen.org.key
+
 # Version of installed software out of host packaging
 
 # monitoring platform
@@ -25,6 +33,10 @@ gnats_version=1.0.2
 redis_exporter_version=0.12.2
 jmx_prometheus_javaagent_version=0.1.0
 node_exporter_version=0.14.0
+
+# secure storage
+vault_version=0.10.3
+vault_checksum=9a493cce9ab501a324664b0ce659b5b8ec7666455e936f96709810c9d27a1903
 
 [monitoring:children]
 prometheus

@@ -1,0 +1,63 @@
+- name: install dependencies
+  apt:
+    name: unzip
+    upgrade: dist
+    state: present
+
+- name: ensure /etc/vault exists
+  file:
+    path: /etc/vault
+    state: directory
+
+- name: install ssl certificate and private key
+  copy: src={{ item }} dest=/etc/vault/{{ item }}
+  with_items:
+    - "{{ caliopen_domain_name }}.crt"
+    - "{{ caliopen_domain_name }}.key"
+
+- name: get vault binary
+  get_url:
+    url: https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_linux_amd64.zip
+    dest: /etc/vault/vault_{{ vault_version }}_linux_amd64.zip
+    checksum: sha256:{{ vault_checksum }}
+
+- name: unzip vault
+  unarchive:
+    src: /etc/vault/vault_{{ vault_version }}_linux_amd64.zip
+    dest: /usr/bin
+    remote_src: yes
+
+- name: copy config file
+  template:
+    src: /templates/config.hcl.j2
+    dest: /etc/vault/config.hcl
+
+- name: copy policies
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/vault"
+    owner: "root"
+    mode: 0600
+  with_fileglob:
+    - "files/*.policy.hcl"
+
+- name: start vault server
+  shell: vault server -config=/etc/vault/config.hcl
+
+## Needs an unsealed vault ##
+# - name: enable user pass auth
+#   shell: vault auth enable userpass
+
+# - name: create imap policy
+#   shell: vault policy write {{ item }} /etc/vault/{{ item }}.policy.hcl
+#   with_items:
+#     - worker
+#     - api
+
+# - name: create worker vault user
+#   shell: vault write auth/userpass/users/{{ vault_worker_username }} \
+#           password={{ vault_worker_password }} policies="worker"
+
+# - name: create api vault user
+#   shell: vault write auth/userpass/users/{{ vault_api_username }} \
+#           password={{ vault_api_password }} policies="api"
