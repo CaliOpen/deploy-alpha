@@ -25,13 +25,14 @@
   tags:
     - deploy
 
-- name: copy caliopen binary
+- name: copy caliopen binaries
   copy:
     src: "{{ dist_directory }}/{{ caliopen_version }}/{{ item }}"
     dest: /usr/local/bin
     mode: 0711
   with_items:
     - caliopen_rest
+    - gocaliopen
   tags:
     - deploy
 
