@@ -1,0 +1,18 @@
+/*
+- vault server -config=/usr/local/goland/src/github.com/CaliOpen/Caliopen/src/backend/configs/vault-server.hcl
+si pas d'operateur root :
+- vault operator init
+
+- vault auth enable userpass
+
+si pas les policies :
+- vault policy write 'credentials-writer' credentials-writer-vault-policy.hcl
+- vault policy write 'credentials-reader' credentials-reader-vault-policy.hcl
+
+si pas les users :
+- vault write auth/userpass/users/api2 password="weak_password" policies="credentials-writer"
+- vault write auth/userpass/users/imapworker password="a_weak_password" policies="credentials-reader"
+
+unseal 3x avec 3 clés :
+- vault operator unseal
+*/
