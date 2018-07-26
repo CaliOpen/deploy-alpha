@@ -1,0 +1,20 @@
+- name: create drone directory
+  file:
+    path: "{{ drone_path }}"
+    state: directory
+
+- name: copy compose file for registry server
+  template: src=docker-compose.yml.j2 dest={{ drone_path }}/docker-compose.yml
+
+- name: start drone
+  shell: docker-compose up -f {{ drone_path }}/docker-compose.yml
+
+- name: configure nginx vhost
+  template:
+    src: drone.nginx.j2
+    dest: /etc/nginx/sites-enabled/drone
+
+- name: restart service nginx
+  service:
+    name: nginx
+    state: restarted
