@@ -1,0 +1,25 @@
+- name: create docker-registry directory
+  file:
+    path: "{{ registry_path }}"
+    state: directory
+
+- name: copy compose file for registry server
+  copy: src=docker-compose.yml dest={{ registry_path }}/docker-compose.yml
+
+- name: start docker-registry
+  shell: docker-compose up -f {{ registry_path }}/docker-compose.yml
+
+- name: copy registry pass file
+  copy:
+    src: registry.htpasswd
+    dest: /etc/nginx/auth/registry.htpasswd
+
+- name: configure nginx vhost
+  template:
+    src: docker-registry.nginx.j2
+    dest: /etc/nginx/sites-enabled/docker-registry 
+
+- name: restart service nginx
+  service:
+    name: nginx
+    state: restarted
