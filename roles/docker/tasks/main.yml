@@ -1,0 +1,39 @@
+- name: install dependencies
+  apt: package={{ item }} state=installed update_cache=yes
+  with_items:
+    - apt-transport-https
+    - ca-certificates
+    - curl
+    - gnupg2
+    - software-properties-common
+
+- name: add apt key
+  apt_key:
+    url: https://download.docker.com/linux/debian/gpg
+    state: present
+
+- name: get debian version
+  shell: lsb_release -cs
+  register: debian_version
+
+- name: Add docker apt repo
+  apt_repository:
+    repo: 'deb [arch=amd64] https://download.docker.com/linux/debian {{ debian_version }} stable'
+    filename: docker
+    state: present
+
+- name: install docker ce
+  apt: package={{ item }} update_cache=yes
+  with_items:
+    - docker-ce
+
+- name: start docker
+  service:
+    name: docker
+    state: restarted
+
+- name: install docker compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.22.0/docker-compose-Linux-x86_64
+    dest: /usr/local/bin/docker-compose
+    mode: 0550
