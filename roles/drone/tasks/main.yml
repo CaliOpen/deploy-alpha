@@ -7,7 +7,7 @@
   template: src=docker-compose.yml.j2 dest={{ drone_path }}/docker-compose.yml
 
 - name: start drone
-  shell: docker-compose up -f {{ drone_path }}/docker-compose.yml
+  shell: docker-compose -f {{ drone_path }}/docker-compose.yml up -d
 
 - name: configure nginx vhost
   template:
