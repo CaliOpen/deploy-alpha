@@ -1,7 +1,7 @@
 http {
 
   upstream docker-registry {
-    server registry:5000;
+    server 127.0.0.1:5000;
   }
 
   map $upstream_http_docker_distribution_api_version $docker_distribution_api_version {
