@@ -10,8 +10,8 @@ citools
 dist_directory=./dist
 object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
-caliopen_domain_name=alpha.caliopen.org
-caliopen_base_domain=caliopen.org
+caliopen_domain_base=caliopen.org
+caliopen_domain_name=alpha.{{ caliopen_domain_base }}
 caliopen_nameservers=["155.133.128.67", "155.133.128.65"]
 
 # Vault
@@ -34,7 +34,7 @@ DRONE_GITHUB_SECRET=
 DRONE_SECRET=this_should_be_a_secret
 # List of admins, Github usernames
 DRONE_ADMIN=
-DRONE_HOST=drone.caliopen.org
+DRONE_HOST=drone.{{ caliopen_domain_base }}
 
 # Version of installed software out of host packaging
 
