@@ -7,7 +7,12 @@
   copy: src=docker-compose.yml dest={{ registry_path }}/docker-compose.yml
 
 - name: start docker-registry
-  shell: docker-compose up -f {{ registry_path }}/docker-compose.yml
+  shell: docker-compose -f {{ registry_path }}/docker-compose.yml up -d
+
+- name: create auth files directory
+  file:
+    path: /etc/nginx/auth
+    state: directory
 
 - name: copy registry pass file
   copy:
