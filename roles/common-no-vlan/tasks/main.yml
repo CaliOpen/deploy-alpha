@@ -2,3 +2,6 @@
   copy: src=ssh_authorized_keys dest=/root/.ssh/authorized_keys mode=0600
   tags:
     - ssh
+
+- name: upgrade packages
+  shell: apt-get upgrade -y
