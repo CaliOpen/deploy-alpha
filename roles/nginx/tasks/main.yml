@@ -15,8 +15,8 @@
   with_items:
     - "{{ caliopen_domain_name }}.crt"
     - "{{ caliopen_domain_name }}.key"
-    - "{{ caliopen_base_domain }}.crt"
-    - "{{ caliopen_base_domain }}.key"
+    - "{{ caliopen_domain_base }}.crt"
+    - "{{ caliopen_domain_base }}.key"
 
 - name: install prometheus nginx metric exporter
   git:
