@@ -22,10 +22,12 @@
   git:
     repo: "https://github.com/knyar/nginx-lua-prometheus.git"
     dest: /srv/nginx-lua-prometheus
+  tags: monitoring
 
 - name: configure lua
   template: src=lua.conf.j2 dest=/etc/nginx/conf.d/lua.conf
   notify: restart nginx
+  tags: monitoring
 
 - name: remove default nginx site
   file:
