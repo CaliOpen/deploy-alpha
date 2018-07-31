@@ -37,7 +37,7 @@
     - "files/*.policy.hcl"
 
 - name: start vault server
-  shell: vault server -config=/etc/vault/config.hcl
+  shell: vault server -config=/etc/vault/config.hcl &
 
 ## Needs an unsealed vault ##
 # - name: enable user pass auth
