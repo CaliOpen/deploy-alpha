@@ -1,7 +1,7 @@
 - hosts: registry
   roles:
     - common-no-vlan
-    - nginx
     - docker
+    - nginx
     - registry
     - drone

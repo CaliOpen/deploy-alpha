@@ -12,9 +12,13 @@
     url: https://download.docker.com/linux/debian/gpg
     state: present
 
+- name: get codename
+  shell: lsb_release -cs
+  register: debian_codename
+
 - name: Add docker apt repo
   apt_repository:
-    repo: "deb [arch=amd64] https://download.docker.com/linux/debian stretch stable"
+    repo: "deb [arch=amd64] https://download.docker.com/linux/debian {{ debian_codename.stdout }} stable"
     filename: docker
     state: present
 
