@@ -42,4 +42,4 @@ gandi vm create --memory 1024 --hostname worker1 --image "Debian 8" --size 10G -
 gandi vm create --memory 2048 --hostname mail1 --image "Debian 8" --size 20G --datacenter FR-SD3 --vlan alpha_vlan --ip 192.168.1.33 --ip-version 4
 
 # Registry
-gandi vm create --memory 2048 --hostname registry1 --image "Debian 8" --size 50G --datacenter FR-SD3 --ip-version 4
+gandi vm create --memory 4096 --cpu 2 --hostname registry1 --image "Debian 8" --size 50G --datacenter FR-SD3 --ip-version 4
