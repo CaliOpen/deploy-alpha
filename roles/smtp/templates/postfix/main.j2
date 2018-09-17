@@ -61,12 +61,12 @@ mynetworks_style = host
 #MILTERS
 #########
 # Milters for mail that arrives via the smtpd(8) server.
-smtpd_milters = unix:/var/run/opendkim/opendkim.sock
+smtpd_milters = inet:localhost:11332
 non_smtpd_milters = unix:/var/run/opendkim/opendkim.sock
 
 # What to do in case of errors? Specify accept, reject, tempfail,
 # or quarantine (Postfix 2.6 or later).
-milter_default_action = tempfail
+milter_default_action = accept
 
 #FINAL DELIVERY PROCESS
 #######################
