@@ -69,3 +69,8 @@
   become: yes
   become_user: amavis
 
+- name: restart rspamd
+  service:
+    name: rspamd
+    state: retarted
+
