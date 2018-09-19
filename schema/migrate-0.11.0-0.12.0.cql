@@ -75,6 +75,6 @@ ALTER TABLE caliopen.message DROP identities;
 -------------------------------------------------------
 -- do operations below after migration script has been run
 -------------------------------------------------------
-ALTER TABLE caliopen.user DROP local_identities;
-DROP TABLE local_identity;
-DROP TABLE remote_identity;
+--ALTER TABLE caliopen.user DROP local_identities;
+--DROP TABLE local_identity;
+--DROP TABLE remote_identity;
