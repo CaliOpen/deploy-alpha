@@ -14,11 +14,6 @@ CREATE TYPE caliopen.external_references (
     parent_id text
 );
 
-CREATE TYPE caliopen.identity (
-    identifier text,
-    type text
-);
-
 CREATE TYPE caliopen.im (
     address text,
     im_id uuid,
@@ -94,6 +89,28 @@ CREATE TYPE caliopen.social_identity (
     infos frozen<map<text, text>>
 );
 
+CREATE TABLE caliopen.identity_lookup (
+    identifier text,
+    protocol text,
+    user_id uuid,
+    identity_id uuid,
+    PRIMARY KEY (identifier, protocol, user_id)
+) WITH CLUSTERING ORDER BY (protocol ASC, user_id ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
 CREATE TABLE caliopen.message (
     user_id uuid,
     message_id uuid,
@@ -106,7 +123,6 @@ CREATE TABLE caliopen.message (
     date_sort timestamp,
     discussion_id uuid,
     external_references frozen<external_references>,
-    identities list<frozen<identity>>,
     importance_level int,
     is_answered boolean,
     is_draft boolean,
@@ -120,6 +136,7 @@ CREATE TABLE caliopen.message (
     subject text,
     tagnames list<text>,
     type text,
+    user_identities list<uuid>,
     PRIMARY KEY (user_id, message_id)
 ) WITH CLUSTERING ORDER BY (message_id ASC)
     AND bloom_filter_fp_chance = 0.01
@@ -137,33 +154,19 @@ CREATE TABLE caliopen.message (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
-CREATE TABLE caliopen.local_identity (
-    identifier text PRIMARY KEY,
+CREATE TABLE caliopen.user_identity (
+    user_id uuid,
+    identity_id uuid,
+    credentials map<text, text>,
     display_name text,
+    identifier text,
+    infos map<text, text>,
+    last_check timestamp,
+    protocol text,
     status text,
     type text,
-    user_id uuid
-) WITH bloom_filter_fp_chance = 0.01
-    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
-    AND comment = ''
-    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
-CREATE TABLE caliopen.discussion_recipient_lookup (
-    user_id uuid,
-    recipient_name text,
-    discussion_id uuid,
-    PRIMARY KEY (user_id, recipient_name)
-) WITH CLUSTERING ORDER BY (recipient_name ASC)
+    PRIMARY KEY (user_id, identity_id)
+) WITH CLUSTERING ORDER BY (identity_id ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
@@ -397,7 +400,6 @@ CREATE TABLE caliopen.user (
     date_insert timestamp,
     family_name text,
     given_name text,
-    local_identities list<text>,
     main_user_id uuid,
     name text,
     params map<text, text>,
@@ -573,32 +575,6 @@ CREATE TABLE caliopen.settings (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
-CREATE TABLE caliopen.remote_identity (
-    user_id uuid,
-    remote_id uuid,
-    credentials map<text, text>,
-    display_name text,
-    infos map<text, text>,
-    last_check timestamp,
-    status text,
-    type text,
-    PRIMARY KEY (user_id, remote_id)
-) WITH CLUSTERING ORDER BY (remote_id ASC)
-    AND bloom_filter_fp_chance = 0.01
-    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
-    AND comment = ''
-    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND crc_check_chance = 1.0
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
 CREATE TABLE caliopen.contact (
     user_id uuid,
     contact_id uuid,
@@ -640,11 +616,53 @@ CREATE TABLE caliopen.contact (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
+CREATE TABLE caliopen.identity_type_lookup (
+    type text,
+    user_id uuid,
+    identity_id uuid,
+    PRIMARY KEY (type, user_id, identity_id)
+) WITH CLUSTERING ORDER BY (user_id ASC, identity_id ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
 CREATE TABLE caliopen.user_raw_lookup (
     user_id uuid,
     raw_msg_id uuid,
     PRIMARY KEY (user_id, raw_msg_id)
 ) WITH CLUSTERING ORDER BY (raw_msg_id ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
+    AND comment = ''
+    AND compaction = {'class': 'SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND crc_check_chance = 1.0
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+CREATE TABLE caliopen.discussion_global_lookup (
+    user_id uuid,
+    hashed text,
+    discussion_id uuid,
+    PRIMARY KEY (user_id, hashed)
+) WITH CLUSTERING ORDER BY (hashed ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = {'keys': 'ALL', 'rows_per_partition': 'ALL'}
     AND comment = ''
