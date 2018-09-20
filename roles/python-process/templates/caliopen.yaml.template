@@ -2,7 +2,7 @@ delivery_agent:
     direct: True
 
 elasticsearch:
-    mappings_version: v5
+    mappings_version: v6
     url:
 {% for host in groups['store'] %}
         - http://{{ hostvars[host]['backend_ip'] }}:9200
@@ -70,3 +70,11 @@ qualifiers:
 
 apiV1:
     strict_patch: false
+
+key_discovery:
+    dns:
+        enable: False
+        name_server: 4.4.4.4
+    hkp:
+        enable: True
+        url: https://pgp.mit.edu/pks/lookup
