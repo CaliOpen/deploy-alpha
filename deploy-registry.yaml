@@ -1,0 +1,7 @@
+- hosts: registry
+  roles:
+    - common-no-vlan
+    - docker
+    - nginx
+    - registry
+    - drone

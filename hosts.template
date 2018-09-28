@@ -4,12 +4,14 @@ caliopen
 gateway
 storage
 smtp
+citools
 
 [services:vars]
 dist_directory=./dist
 object_store_access_key=SZ1BBGKTD2N13E0W5L8N
 object_store_secret_key=qTsjiThBQA2NH6ZO32tCwCC6wcC8ValVLR16XUsB
-caliopen_domain_name=alpha.caliopen.org
+caliopen_domain_base=caliopen.org
+caliopen_domain_name=alpha.{{ caliopen_domain_base }}
 caliopen_nameservers=["155.133.128.67", "155.133.128.65"]
 
 # Vault
@@ -21,6 +23,20 @@ vault_worker_username=imapworker
 vault_worker_password=TO_BE_DEFINED
 vault_cert_path=/etc/vault/alpha.caliopen.org.crt
 vault_key_path=/etc/vault/alpha.caliopen.org.key
+
+# Docker registry
+registry_path=/etc/docker-registry
+
+# Drone
+drone_path=/etc/drone
+# Github OAuth
+DRONE_GITHUB_CLIENT=
+DRONE_GITHUB_SECRET=
+# Agent/Server communication
+DRONE_SECRET=this_should_be_a_secret
+# List of admins, Github usernames
+DRONE_ADMIN=
+DRONE_HOST=drone.{{ caliopen_domain_base }}
 
 # Version of installed software out of host packaging
 
@@ -62,6 +78,9 @@ store
 cache
 mq
 object_store
+
+[citools:children]
+registry
 
 [store]
 store1 ansible_host=ip_store1 ansible_user=root backend_ip=backend_store1
@@ -109,3 +128,6 @@ mail1 ansible_host=ip_mail1 ansible_user=root backend_ip=backend_mail1
 
 [logstash]
 logstash1 ansible_host=ip_logstash1 ansible_user=root backend_ip=backend_logstash1
+
+[registry]
+registry1 ansible_host=ip_registry1 ansible_user=root backend_ip=backend_registry1
