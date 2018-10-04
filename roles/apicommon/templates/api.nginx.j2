@@ -8,7 +8,7 @@ upstream uwsgi_apiv1 {
 upstream apiv2 {
   least_conn;
   {% for host in groups['api'] %}
-  server {{ hostvars[host]['backend_ip'] }}:31415;
+  server {{ hostvars[host]['backend_ip'] }}:6544;
   {% endfor %}
 }
 
