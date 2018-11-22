@@ -63,6 +63,7 @@
     dest: /usr/local/bin
   with_items:
     - imapworker
+    - twitterworker
     - idpoller
   tags:
     - deploy
@@ -71,6 +72,13 @@
   template:
     src: imapworker.yaml.j2
     dest: /etc/caliopen/imapworker.yaml
+  tags:
+    - deploy
+
+- name: copy caliopen imap worker configuration
+  template:
+    src: twitterworker.yaml.j2
+    dest: /etc/caliopen/twitterworker.yaml
   tags:
     - deploy
 
@@ -85,6 +93,7 @@
   template: src={{ item }}.service.j2 dest=/etc/systemd/system/{{ item }}.service
   with_items:
     - imapworker
+    - twitterworker
     - idpoller
   tags:
     - deploy
@@ -93,6 +102,7 @@
   service: name={{ item }} state=started enabled=yes
   with_items:
     - imapworker
+    - twitterworker
     - idpoller
   tags:
     - deploy
