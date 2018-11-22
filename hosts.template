@@ -22,6 +22,12 @@ vault_worker_password=TO_BE_DEFINED
 vault_cert_path=/etc/vault/alpha.caliopen.org.crt
 vault_key_path=/etc/vault/alpha.caliopen.org.key
 
+# Oauth credentials
+gmail_oauth_client_id=TO_BE_DEFINED
+gmail_oauth_client_secret=TO_BE_DEFINED
+twitter_oauth_app_key=TO_BE_DEFINED
+twitter_oauth_app_secret=TO_BE_DEFINED
+
 # Version of installed software out of host packaging
 
 # monitoring platform
