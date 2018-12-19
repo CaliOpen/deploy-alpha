@@ -25,7 +25,7 @@ BrokerConfig:
       buckets:
         raw_messages: caliopen-raw-messages                # bucket name to put raw messages to
         temporary_attachments: caliopen-tmp-attachments    # bucket name to store draft attachments
-    use_vault: false
+    use_vault: true
     vault_settings:
       url: https://vault.{{ caliopen_domain_name }}:8200
       username: {{ vault_worker_username }}
