@@ -1,5 +1,5 @@
 workers: 2                                             # number of concurrent workers
-hostname: localhost
+hostname: {{ caliopen_domain_name }}
 #messaging system
 nats_url: nats://{{ hostvars['mq1']['backend_ip'] }}:4222
 nats_queue: IMAPworkers                                # NATS group queue for workers
@@ -40,7 +40,7 @@ LDAConfig:
 {% for host in groups['store'] %}
       - http://{{ hostvars[host]['backend_ip'] }}:9200
 {% endfor %}  #messaging system
-  in_topic: inboundSMTP # NATS topic to listen to
+  in_topic: inboundSMTP # NATS topic to listen to
   out_topic: outboundSMTP
   nats_queue: SMTPqueue
   # notifications
