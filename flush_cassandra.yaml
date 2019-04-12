@@ -1,0 +1,5 @@
+- hosts: store
+  serial: 1
+  tasks:
+    - name: flush caliopen keyspace
+      shell: nodetool flush caliopen
