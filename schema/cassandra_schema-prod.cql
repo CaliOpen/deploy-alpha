@@ -53,6 +53,7 @@ CREATE TYPE caliopen_prod.organization (
 CREATE TYPE caliopen_prod.participant (
     address text,
     contact_ids frozen<list<uuid>>,
+    participant_id uuid,
     label text,
     protocol text,
     type text
@@ -125,7 +126,7 @@ CREATE TABLE caliopen_prod.message (
     date_delete timestamp,
     date_insert timestamp,
     date_sort timestamp,
-    discussion_id uuid,
+    discussion_id text,
     external_references frozen<external_references>,
     identities list<frozen<identity>>,
     importance_level int,
@@ -289,55 +290,13 @@ CREATE TABLE caliopen_prod.notification (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
-CREATE TABLE caliopen_prod.discussion (
-    user_id uuid,
-    discussion_id uuid,
-    date_insert timestamp,
-    excerpt text,
-    importance_level int,
-    PRIMARY KEY (user_id, discussion_id)
-) WITH CLUSTERING ORDER BY (discussion_id ASC)
-    AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
-    AND comment = ''
-    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
 CREATE TABLE caliopen_prod.contact_lookup (
     user_id uuid,
     value text,
     type text,
-    contact_ids list<uuid>,
+    contact_id uuid,
     PRIMARY KEY (user_id, value, type)
 ) WITH CLUSTERING ORDER BY (value ASC, type ASC)
-    AND bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
-    AND comment = ''
-    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
-CREATE TABLE caliopen_prod.discussion_thread_lookup (
-    user_id uuid,
-    external_root_msg_id text,
-    discussion_id uuid,
-    PRIMARY KEY (user_id, external_root_msg_id)
-) WITH CLUSTERING ORDER BY (external_root_msg_id ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
     AND comment = ''
@@ -357,26 +316,6 @@ CREATE TABLE caliopen_prod.notification_ttl (
     description text,
     ttl_duration int
 ) WITH bloom_filter_fp_chance = 0.01
-    AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
-    AND comment = ''
-    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
-    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
-    AND dclocal_read_repair_chance = 0.1
-    AND default_time_to_live = 0
-    AND gc_grace_seconds = 864000
-    AND max_index_interval = 2048
-    AND memtable_flush_period_in_ms = 0
-    AND min_index_interval = 128
-    AND read_repair_chance = 0.0
-    AND speculative_retry = '99.0PERCENTILE';
-
-CREATE TABLE caliopen_prod.discussion_list_lookup (
-    user_id uuid,
-    list_id text,
-    discussion_id uuid,
-    PRIMARY KEY (user_id, list_id)
-) WITH CLUSTERING ORDER BY (list_id ASC)
-    AND bloom_filter_fp_chance = 0.01
     AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
     AND comment = ''
     AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
@@ -754,12 +693,37 @@ CREATE TABLE caliopen_prod.user_raw_lookup (
     AND read_repair_chance = 0.0
     AND speculative_retry = '99.0PERCENTILE';
 
-CREATE TABLE caliopen_prod.discussion_global_lookup (
+CREATE TABLE caliopen_prod.participant_hash (
     user_id uuid,
-    hashed text,
-    discussion_id uuid,
-    PRIMARY KEY (user_id, hashed)
-) WITH CLUSTERING ORDER BY (hashed ASC)
+    kind text,
+    key text,
+    value text,
+    components list<text>,
+    date_insert timestamp,
+    PRIMARY KEY (user_id, kind, key, value)
+) WITH CLUSTERING ORDER BY (kind ASC, key ASC, value ASC)
+    AND bloom_filter_fp_chance = 0.01
+    AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
+    AND comment = ''
+    AND compaction = {'class': 'org.apache.cassandra.db.compaction.SizeTieredCompactionStrategy'}
+    AND compression = {'sstable_compression': 'org.apache.cassandra.io.compress.LZ4Compressor'}
+    AND dclocal_read_repair_chance = 0.1
+    AND default_time_to_live = 0
+    AND gc_grace_seconds = 864000
+    AND max_index_interval = 2048
+    AND memtable_flush_period_in_ms = 0
+    AND min_index_interval = 128
+    AND read_repair_chance = 0.0
+    AND speculative_retry = '99.0PERCENTILE';
+
+CREATE TABLE caliopen_prod.hash_lookup (
+    user_id uuid,
+    uri text,
+    hash text,
+    date_insert timestamp,
+    hash_components list<text>,
+    PRIMARY KEY (user_id, uri, hash)
+) WITH CLUSTERING ORDER BY (uri ASC, hash ASC)
     AND bloom_filter_fp_chance = 0.01
     AND caching = '{"keys":"ALL", "rows_per_partition":"ALL"}'
     AND comment = ''
