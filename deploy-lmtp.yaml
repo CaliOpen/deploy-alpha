@@ -1,7 +1,0 @@
-- hosts: lmtp
-  roles:
-    - common
-    - iptables
-    - commonelk
-    - filebeat
-    - lmtp

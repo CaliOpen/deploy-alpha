@@ -1,9 +1,0 @@
-[Unit]
-Description=Caliopen twitter worker service
-
-[Service]
-Restart=always
-ExecStart=/usr/local/bin/twitterworker start --configpath /etc/caliopen -p /var/run/twitterworker.pid >> /var/log/twitterworker.log 2>&1 &
-
-[Install]
-WantedBy=local.target

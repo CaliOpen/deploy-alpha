@@ -1,9 +1,0 @@
-- hosts: web_client
-  roles:
-    - common
-    - iptables
-    - nginx
-    - commonelk
-    - filebeat
-    - client
-    - maintenance

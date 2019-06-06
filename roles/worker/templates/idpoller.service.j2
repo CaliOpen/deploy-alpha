@@ -1,9 +1,0 @@
-[Unit]
-Description=Caliopen id poller service
-
-[Service]
-Restart=always
-ExecStart=/usr/local/bin/idpoller start --configpath /etc/caliopen -p /var/run/idpoller.pid >> /var/log/idpoller.log 2>&1  &
-
-[Install]
-WantedBy=local.target

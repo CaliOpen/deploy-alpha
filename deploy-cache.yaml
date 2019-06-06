@@ -1,5 +1,0 @@
-- hosts: cache
-  roles:
-    - common
-    - iptables
-    - cache

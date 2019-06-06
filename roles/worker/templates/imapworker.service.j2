@@ -1,9 +1,0 @@
-[Unit]
-Description=Caliopen imap worker service
-
-[Service]
-Restart=always
-ExecStart=/usr/local/bin/imapworker start --configpath /etc/caliopen -p /var/run/imapworker.pid >> /var/log/imapworker.log 2>&1 &
-
-[Install]
-WantedBy=local.target

@@ -1,7 +1,0 @@
-- hosts: logstash
-  roles:
-    - common
-    - iptables
-    - java8
-    - commonelk
-    - logstash

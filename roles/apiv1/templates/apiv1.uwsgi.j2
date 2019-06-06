@@ -1,9 +1,0 @@
-[uwsgi]
-plugin = python
-socket = {{ hostvars[ansible_hostname]['backend_ip'] }}:3001
-chdir = /usr/local/lib/python2.7/dist-packages/caliopen_api
-paste = config:/etc/caliopen/apiv1.ini
-paste-logger = true
-workers = 8
-master = true
-buffer-size = 32768
