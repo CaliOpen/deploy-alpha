@@ -1,6 +1,0 @@
-- hosts: prometheus
-  roles:
-    - common
-    - iptables
-    - prometheus
-    - alertmanager

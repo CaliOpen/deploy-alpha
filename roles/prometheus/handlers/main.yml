@@ -1,8 +1,0 @@
-- name: start prometheus
-  service: name=prometheus state=started enabled=yes
-
-- name: restart prometheus
-  service: name=prometheus state=restarted
-
-- name: start elasticsearch-exporter
-  service: name=elasticsearch-exporter state=started enabled=yes

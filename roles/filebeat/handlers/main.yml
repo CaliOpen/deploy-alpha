@@ -1,6 +1,0 @@
-- name: restart filebeat
-  service: name=filebeat state=restarted
-
-- name: start filebeat
-  service: name=filebeat state=started enabled=yes
-

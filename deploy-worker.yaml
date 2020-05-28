@@ -1,8 +1,0 @@
-- hosts: worker
-  roles:
-    - common
-    - iptables
-    - python-process
-    - commonelk
-    - filebeat
-    - worker
