@@ -1,6 +1,15 @@
 global:
-  smtp_from: 'alert@caliopen.org'
-  smtp_smarthost: 'localhost:25'
+  smtp_from: 'ops@caliopen.org'
+  smtp_smarthost: 'mail.gandi.net:587'
+  smtp_auth_username: 'ops@caliopen.org'
+  smtp_auth_password: !vault |
+          $ANSIBLE_VAULT;1.1;AES256
+          39323731323662373133663263653334643766373562663238653661333963323362336238383034
+          3032613435376263643130636438353339323465613763640a303561633162356361333136386664
+          61316631333162386430343935373132393437656234636331613230663362373932356465323865
+          3636373534363331660a666165656362316335376464376565323239653031353739623831306537
+          6637
+  smtp_require_tls: true
 
 route:
   group_by: ['alertname', 'service']
@@ -16,4 +25,4 @@ route:
 receivers:
   - name: 'team-ops'
     email_configs:
-      - to: 'ops@caliopen.org'
+      - to: 'alert@caliopen.org'

@@ -1,7 +1,7 @@
 - name: install alertmanager
   copy:
     src: "{{ dist_directory }}/ext/alertmanager-{{ alertmanager_version }}.linux-amd64/alertmanager"
-    dest: /usr/local/sbin/alertmanager
+    dest: /usr/local/alertmanager-{{ alertmanager_version }}.linux-amd64/alertmanager
     mode: 0711
 
 - name: install service for alertmanager

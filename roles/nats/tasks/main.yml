@@ -10,6 +10,12 @@
 - name: start nats
   service: name=gnatsd state=started enabled=yes
 
+- name: install prometheus-nats-exporter
+  copy:
+    src: "{{ dist_directory }}/ext/prometheus-nats-exporter"
+    dest: /usr/local/sbin/prometheus-nats-exporter
+    mode: 0711
+
 - name: install prometheus-nats-exporter service
   template: src=prometheus-nats-exporter.service.j2 dest=/etc/systemd/system/prometheus-nats-exporter.service
 

@@ -1,0 +1,17 @@
+ALERT EsStatusYellow
+  IF elasticsearch_cluster_health_status{color="yellow"}
+  FOR 5m
+  LABELS { severity ="warning" }
+  ANNOTATIONS {
+    SUMMARY = "{{$labels.instance}}: ES cluster status yellow",
+    DESCRIPTION = "{{$labels.instance}}: Elasticsearch cluster has been in yellow state for more than 5 minutes)"
+}
+
+ALERT EsStatusRed
+  IF elasticsearch_cluster_health_status{color="red"}
+  FOR 5m
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    SUMMARY = "{{$labels.instance}}: ES cluster status red",
+    DESCRIPTION = "{{$labels.instance}}: Elasticsearch cluster has been in red state for more than 5 minutes)"
+}

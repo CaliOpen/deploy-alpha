@@ -39,7 +39,7 @@ gnats_version=1.0.2
 
 # prometheus exporters
 redis_exporter_version=0.12.2
-jmx_prometheus_javaagent_version=0.1.0
+jmx_prometheus_javaagent_version=0.3.0
 node_exporter_version=0.14.0
 
 # secure storage

@@ -1,0 +1,47 @@
+ALERT RedisHighMissRatio
+  IF (((rate(redis_keyspace_misses_total[5m])) / (rate(redis_keyspace_hits_total[5m]) + rate(redis_keyspace_misses_total[5m]))) > 0.5)  
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis instance miss ratio high.",
+    description = "{{ $labels.instance }}: Redis instance miss ratio is over 50%.",
+  }
+
+ALERT MemoryFragmentationHigh
+  IF (redis_memory_fragmentation_ratio > 1.5)
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis memory fragmentation too high.",
+    description = "{{ $labels.instance }}: Redis instance memory fragmentation ratio over 1.5.",
+  }
+
+ALERT MemoryFragmentationLow
+  IF (redis_memory_fragmentation_ratio > 0.9)
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis memory fragmentation too low.",
+    description = "{{ $labels.instance }}: Redis instance memory fragmentation ratio under 0.9.",
+  }
+
+ALERT KeyEvictions
+  IF (rate(redis_evicted_keys_total[5m]) >= 1)
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis instance evicting keys.",
+    description = "{{ $labels.instance }}: Redis instance has been consistently evicting keys for 5 minutes.",
+  }
+
+ALERT TotalMemoryUsed
+  IF (redis_memory_used_bytes{instance="cache1.local:9121"} / node_memory_MemTotal{instance="cache1.local:9100"}) > 0.8 
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis is using too much memory.",
+    description = "{{ $labels.instance }}: Redis instance is using more than 80% of its available memory.",
+  }
+
+ALERT MaxClients
+  IF  redis_connected_clients > 80000
+  LABELS { severity = "critical" }
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }}: Redis is at 80% of client capacity.",
+    description = "{{ $labels.instance }}: Redis is currently handling more than 80000 clients",
+  }
